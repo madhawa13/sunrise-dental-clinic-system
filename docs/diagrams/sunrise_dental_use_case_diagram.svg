@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1800" height="1250" viewBox="0 0 1800 1250">
+  <defs>
+    <style>
+      .title { font: 700 28px Arial, sans-serif; fill: #17365d; }
+      .actor-label { font: 700 20px Arial, sans-serif; fill: #17365d; text-anchor: middle; }
+      .use-text { font: 600 17px Arial, sans-serif; fill: #1f2937; text-anchor: middle; dominant-baseline: middle; }
+      .small-text { font: 600 15px Arial, sans-serif; fill: #334155; text-anchor: middle; dominant-baseline: middle; }
+      .relation-text { font: italic 14px Arial, sans-serif; fill: #9b1c1c; text-anchor: middle; }
+      .legend { font: 14px Arial, sans-serif; fill: #475569; }
+      .actor { stroke: #17365d; stroke-width: 4; fill: none; stroke-linecap: round; }
+      .association { stroke: #94a3b8; stroke-width: 2; fill: none; }
+      .relation { stroke: #9b1c1c; stroke-width: 2.2; fill: none; stroke-dasharray: 9 7; marker-end: url(#arrow); }
+      .usecase { fill: #f8fbff; stroke: #2e74b5; stroke-width: 2.4; }
+      .internal { fill: #fff8e8; stroke: #b7791f; stroke-width: 2; }
+    </style>
+    <marker id="arrow" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L10,4 L0,8 z" fill="#9b1c1c"/>
+    </marker>
+  </defs>
+
+  <rect width="1800" height="1250" fill="#ffffff"/>
+
+  <!-- System boundary -->
+  <rect x="250" y="55" width="1300" height="1120" rx="18" fill="#ffffff" stroke="#17365d" stroke-width="3"/>
+  <rect x="250" y="55" width="1300" height="58" rx="18" fill="#eaf2f8"/>
+  <path d="M250 95 H1550" stroke="#17365d" stroke-width="3"/>
+  <text x="900" y="91" class="title" text-anchor="middle">Sunrise Dental Clinic Appointment and Patient Management System</text>
+
+  <!-- Association lines are behind the use cases -->
+  <!-- Receptionist associations -->
+  <g class="association">
+    <path d="M150 555 C250 400, 340 260, 410 195"/>
+    <path d="M150 555 C275 370, 615 240, 760 195"/>
+    <path d="M150 555 C300 300, 1000 225, 1110 195"/>
+    <path d="M150 555 L360 345"/>
+    <path d="M150 555 L360 475"/>
+    <path d="M150 555 L360 605"/>
+    <path d="M150 555 L360 735"/>
+    <path d="M150 555 L360 865"/>
+    <path d="M150 555 L360 995"/>
+    <path d="M150 555 C330 500, 570 395, 665 345"/>
+    <path d="M150 555 C345 550, 570 500, 665 475"/>
+    <path d="M150 555 C345 600, 570 610, 665 605"/>
+  </g>
+
+  <!-- Dentist associations -->
+  <g class="association">
+    <path d="M1650 555 C1550 385, 1390 250, 1210 195"/>
+    <path d="M1650 555 C1510 325, 1100 240, 860 195"/>
+    <path d="M1650 555 C1460 295, 730 230, 510 195"/>
+    <path d="M1650 555 L1440 345"/>
+    <path d="M1650 555 L1440 475"/>
+    <path d="M1650 555 L1440 605"/>
+    <path d="M1650 555 L1440 735"/>
+  </g>
+
+  <!-- Common use cases -->
+  <ellipse class="usecase" cx="470" cy="195" rx="120" ry="48"/>
+  <text class="use-text" x="470" y="195">Login</text>
+  <ellipse class="usecase" cx="810" cy="195" rx="120" ry="48"/>
+  <text class="use-text" x="810" y="195">Access Help</text>
+  <ellipse class="usecase" cx="1160" cy="195" rx="120" ry="48"/>
+  <text class="use-text" x="1160" y="195">Logout</text>
+
+  <!-- Receptionist use cases, left column -->
+  <ellipse class="usecase" cx="480" cy="345" rx="135" ry="48"/>
+  <text class="use-text" x="480" y="345">Register Patient</text>
+  <ellipse class="usecase" cx="480" cy="475" rx="135" ry="48"/>
+  <text class="use-text" x="480" y="475">Search Patient</text>
+  <ellipse class="usecase" cx="480" cy="605" rx="145" ry="50"/>
+  <text class="use-text" x="480" y="605">Register Appointment</text>
+  <ellipse class="usecase" cx="480" cy="735" rx="145" ry="50"/>
+  <text class="use-text" x="480" y="735">Search Appointment</text>
+  <ellipse class="usecase" cx="480" cy="865" rx="145" ry="50"/>
+  <text class="use-text" x="480" y="865">Update Appointment</text>
+  <ellipse class="usecase" cx="480" cy="995" rx="145" ry="50"/>
+  <text class="use-text" x="480" y="995">Cancel Appointment</text>
+
+  <!-- Receptionist use cases, middle column -->
+  <ellipse class="usecase" cx="785" cy="345" rx="125" ry="48"/>
+  <text class="use-text" x="785" y="345">Calculate Bill</text>
+  <ellipse class="usecase" cx="785" cy="475" rx="125" ry="48"/>
+  <text class="use-text" x="785" y="475">Record Payment</text>
+  <ellipse class="usecase" cx="785" cy="605" rx="125" ry="48"/>
+  <text class="use-text" x="785" y="605">Print Receipt</text>
+
+  <!-- Dentist use cases -->
+  <ellipse class="usecase" cx="1320" cy="345" rx="135" ry="48"/>
+  <text class="use-text" x="1320" y="345">View Appointments</text>
+  <ellipse class="usecase" cx="1320" cy="475" rx="160" ry="52"/>
+  <text class="use-text" x="1320" y="466">View Patient</text>
+  <text class="use-text" x="1320" y="488">Treatment History</text>
+  <ellipse class="usecase" cx="1320" cy="605" rx="150" ry="50"/>
+  <text class="use-text" x="1320" y="605">Add Treatment Record</text>
+  <ellipse class="usecase" cx="1320" cy="735" rx="160" ry="50"/>
+  <text class="use-text" x="1320" y="735">Update Treatment Record</text>
+
+  <!-- Internal included use cases -->
+  <ellipse class="internal" cx="1000" cy="840" rx="150" ry="46"/>
+  <text class="small-text" x="1000" y="840">Validate Appointment Details</text>
+  <ellipse class="internal" cx="1000" cy="950" rx="150" ry="46"/>
+  <text class="small-text" x="1000" y="950">Check Dentist Availability</text>
+  <ellipse class="internal" cx="1000" cy="1060" rx="150" ry="46"/>
+  <text class="small-text" x="1000" y="1060">Generate Appointment Number</text>
+  <ellipse class="internal" cx="770" cy="760" rx="145" ry="46"/>
+  <text class="small-text" x="770" y="760">Retrieve Treatment Charges</text>
+
+  <!-- Include/extend relationships -->
+  <path class="relation" d="M615 590 C740 600, 820 740, 900 820"/>
+  <text class="relation-text" x="715" y="625">&lt;&lt;include&gt;&gt;</text>
+  <path class="relation" d="M615 605 C690 700, 760 860, 900 930"/>
+  <text class="relation-text" x="680" y="810">&lt;&lt;include&gt;&gt;</text>
+  <path class="relation" d="M610 620 C650 800, 760 1000, 920 1040"/>
+  <text class="relation-text" x="700" y="960">&lt;&lt;include&gt;&gt;</text>
+  <path class="relation" d="M720 380 C650 470, 650 650, 700 730"/>
+  <text class="relation-text" x="605" y="520">&lt;&lt;include&gt;&gt;</text>
+  <path class="relation" d="M870 575 C975 500, 970 385, 900 360"/>
+  <text class="relation-text" x="995" y="470">&lt;&lt;extend&gt;&gt;</text>
+
+  <!-- Actors -->
+  <g transform="translate(150,500)" class="actor">
+    <circle cx="0" cy="-65" r="28"/>
+    <path d="M0 -37 V45 M-48 -2 H48 M0 45 L-42 105 M0 45 L42 105"/>
+  </g>
+  <text x="150" y="640" class="actor-label">Receptionist /</text>
+  <text x="150" y="666" class="actor-label">Clinic Staff</text>
+
+  <g transform="translate(1650,500)" class="actor">
+    <circle cx="0" cy="-65" r="28"/>
+    <path d="M0 -37 V45 M-48 -2 H48 M0 45 L-42 105 M0 45 L42 105"/>
+  </g>
+  <text x="1650" y="640" class="actor-label">Dentist</text>
+
+  <!-- Legend -->
+  <g transform="translate(1030,1135)">
+    <line x1="0" y1="0" x2="70" y2="0" class="association"/>
+    <text x="82" y="5" class="legend">Actor association</text>
+    <line x1="245" y1="0" x2="315" y2="0" class="relation"/>
+    <text x="327" y="5" class="legend">Include / extend relationship</text>
+  </g>
+</svg>
