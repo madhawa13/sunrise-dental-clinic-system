@@ -18,3 +18,5 @@ Thumbs.db
 # Temporary files
 *.tmp
 *.temp
+# Local database credentials
+src/main/resources/db.properties
