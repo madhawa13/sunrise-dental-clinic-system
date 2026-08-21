@@ -1,0 +1,20 @@
+# Maven build output
+/target/
+
+# Eclipse workspace-generated files
+.metadata/
+.recommenders/
+
+# Server-generated files
+Servers/
+
+# Log files
+*.log
+
+# Operating-system files
+.DS_Store
+Thumbs.db
+
+# Temporary files
+*.tmp
+*.temp
