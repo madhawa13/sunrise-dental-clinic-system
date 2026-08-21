@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1200" viewBox="0 0 1600 1200">
+  <defs>
+    <style>
+      .bg{fill:#f8fafc}.title{font:700 34px Arial;fill:#17365d}.sub{font:16px Arial;fill:#52657a}
+      .box{fill:#fff;stroke:#285f9e;stroke-width:2.5}.head{fill:#285f9e}.htext{font:700 20px Arial;fill:#fff;text-anchor:middle}
+      .field{font:15px Consolas,monospace;fill:#26384a}.key{font-weight:700;fill:#a92922}
+      .rel{fill:none;stroke:#6b7f95;stroke-width:2.4}.rtext{font:700 14px Arial;fill:#a92922;paint-order:stroke;stroke:#f8fafc;stroke-width:5px}
+      .legend{font:15px Arial;fill:#52657a}.note{fill:#fff8e6;stroke:#c9871a;stroke-width:2}
+    </style>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth"><path d="M0,0 L0,6 L9,3 z" fill="#6b7f95"/></marker>
+  </defs>
+  <rect class="bg" width="1600" height="1200"/>
+  <text class="title" x="800" y="55" text-anchor="middle">Sunrise Dental Clinic – Entity Relationship Diagram</text>
+  <text class="sub" x="800" y="84" text-anchor="middle">Appointment and Patient Management System</text>
+
+  <!-- USERS -->
+  <g transform="translate(70,135)"><rect class="box" width="330" height="235" rx="12"/><path class="head" d="M12 0H318Q330 0 330 12V48H0V12Q0 0 12 0"/><text class="htext" x="165" y="31">USERS</text>
+    <text class="field key" x="18" y="78">PK  user_id</text><text class="field" x="18" y="105">    username (UQ)</text><text class="field" x="18" y="132">    password_hash</text><text class="field" x="18" y="159">    full_name</text><text class="field" x="18" y="186">    role</text><text class="field" x="18" y="213">    email, phone, active</text></g>
+
+  <!-- PATIENTS -->
+  <g transform="translate(70,445)"><rect class="box" width="330" height="265" rx="12"/><path class="head" d="M12 0H318Q330 0 330 12V48H0V12Q0 0 12 0"/><text class="htext" x="165" y="31">PATIENTS</text>
+    <text class="field key" x="18" y="78">PK  patient_id</text><text class="field" x="18" y="105">    patient_number (UQ)</text><text class="field" x="18" y="132">    first_name, last_name</text><text class="field" x="18" y="159">    date_of_birth, gender</text><text class="field" x="18" y="186">    nic_number, phone</text><text class="field" x="18" y="213">    email, address</text><text class="field" x="18" y="240">    medical_notes, active</text></g>
+
+  <!-- TREATMENT CHARGES -->
+  <g transform="translate(70,805)"><rect class="box" width="330" height="220" rx="12"/><path class="head" d="M12 0H318Q330 0 330 12V48H0V12Q0 0 12 0"/><text class="htext" x="165" y="31">TREATMENT_CHARGES</text>
+    <text class="field key" x="18" y="78">PK  charge_id</text><text class="field" x="18" y="105">    treatment_code (UQ)</text><text class="field" x="18" y="132">    treatment_name</text><text class="field" x="18" y="159">    description</text><text class="field" x="18" y="186">    standard_charge, active</text></g>
+
+  <!-- APPOINTMENTS -->
+  <g transform="translate(610,135)"><rect class="box" width="370" height="290" rx="12"/><path class="head" d="M12 0H358Q370 0 370 12V48H0V12Q0 0 12 0"/><text class="htext" x="185" y="31">APPOINTMENTS</text>
+    <text class="field key" x="18" y="78">PK  appointment_id</text><text class="field" x="18" y="105">    appointment_number (UQ)</text><text class="field key" x="18" y="132">FK  patient_id</text><text class="field key" x="18" y="159">FK  dentist_id → users</text><text class="field" x="18" y="186">    appointment_date</text><text class="field" x="18" y="213">    appointment_time</text><text class="field" x="18" y="240">    reason, status</text><text class="field" x="18" y="267">    notes</text></g>
+
+  <!-- TREATMENTS -->
+  <g transform="translate(610,525)"><rect class="box" width="370" height="250" rx="12"/><path class="head" d="M12 0H358Q370 0 370 12V48H0V12Q0 0 12 0"/><text class="htext" x="185" y="31">TREATMENTS</text>
+    <text class="field key" x="18" y="78">PK  treatment_id</text><text class="field key" x="18" y="105">FK  appointment_id</text><text class="field key" x="18" y="132">FK  dentist_id → users</text><text class="field" x="18" y="159">    treatment_date</text><text class="field" x="18" y="186">    diagnosis, treatment_notes</text><text class="field" x="18" y="213">    prescription</text></g>
+
+  <!-- TREATMENT DETAILS -->
+  <g transform="translate(610,865)"><rect class="box" width="370" height="220" rx="12"/><path class="head" d="M12 0H358Q370 0 370 12V48H0V12Q0 0 12 0"/><text class="htext" x="185" y="31">TREATMENT_DETAILS</text>
+    <text class="field key" x="18" y="78">PK  treatment_detail_id</text><text class="field key" x="18" y="105">FK  treatment_id</text><text class="field key" x="18" y="132">FK  charge_id</text><text class="field" x="18" y="159">    quantity, unit_price</text><text class="field" x="18" y="186">    notes</text></g>
+
+  <!-- BILLS -->
+  <g transform="translate(1190,185)"><rect class="box" width="340" height="250" rx="12"/><path class="head" d="M12 0H328Q340 0 340 12V48H0V12Q0 0 12 0"/><text class="htext" x="170" y="31">BILLS</text>
+    <text class="field key" x="18" y="78">PK  bill_id</text><text class="field" x="18" y="105">    bill_number (UQ)</text><text class="field key" x="18" y="132">FK  appointment_id (UQ)</text><text class="field" x="18" y="159">    subtotal, discount</text><text class="field" x="18" y="186">    total_amount</text><text class="field" x="18" y="213">    payment_status</text></g>
+
+  <!-- PAYMENTS -->
+  <g transform="translate(1190,570)"><rect class="box" width="340" height="265" rx="12"/><path class="head" d="M12 0H328Q340 0 340 12V48H0V12Q0 0 12 0"/><text class="htext" x="170" y="31">PAYMENTS</text>
+    <text class="field key" x="18" y="78">PK  payment_id</text><text class="field" x="18" y="105">    payment_number (UQ)</text><text class="field key" x="18" y="132">FK  bill_id</text><text class="field key" x="18" y="159">FK  received_by → users</text><text class="field" x="18" y="186">    amount, payment_method</text><text class="field" x="18" y="213">    payment_date</text><text class="field" x="18" y="240">    reference_number, notes</text></g>
+
+  <!-- Relationships -->
+  <path class="rel" marker-end="url(#arrow)" d="M400 245 H505 V285 H610"/><text class="rtext" x="470" y="237">1 : M dentist</text>
+  <path class="rel" marker-end="url(#arrow)" d="M400 560 H505 V335 H610"/><text class="rtext" x="425" y="545">1 : M</text>
+  <path class="rel" marker-end="url(#arrow)" d="M795 425 V525"/><text class="rtext" x="810" y="482">1 : M</text>
+  <path class="rel" marker-end="url(#arrow)" d="M400 310 H525 V650 H610"/><text class="rtext" x="455" y="330">1 : M dentist</text>
+  <path class="rel" marker-end="url(#arrow)" d="M795 775 V865"/><text class="rtext" x="810" y="828">1 : M</text>
+  <path class="rel" marker-end="url(#arrow)" d="M400 930 H610"/><text class="rtext" x="485" y="920">1 : M</text>
+  <path class="rel" marker-end="url(#arrow)" d="M980 285 H1190"/><text class="rtext" x="1060" y="275">1 : 0..1</text>
+  <path class="rel" marker-end="url(#arrow)" d="M1360 435 V570"/><text class="rtext" x="1375" y="510">1 : M</text>
+  <path class="rel" marker-end="url(#arrow)" d="M400 180 H1080 V730 H1190"/><text class="rtext" x="1000" y="170">1 : M received by</text>
+
+  <rect class="note" x="1060" y="950" width="470" height="115" rx="12"/>
+  <text class="legend" x="1080" y="980"><tspan class="key">PK</tspan><tspan> = Primary Key</tspan></text>
+  <text class="legend" x="1080" y="1010"><tspan class="key">FK</tspan><tspan> = Foreign Key</tspan></text>
+  <text class="legend" x="1080" y="1040"><tspan class="key">UQ</tspan><tspan> = Unique field   •   1:M = One-to-many</tspan></text>
+  <text class="sub" x="800" y="1160" text-anchor="middle">Figure: Database ER Diagram – Sunrise Dental Clinic System</text>
+</svg>
