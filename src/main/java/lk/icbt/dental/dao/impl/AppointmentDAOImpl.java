@@ -22,8 +22,7 @@ import lk.icbt.dental.util.DatabaseConnection;
 /**
  * JDBC implementation of AppointmentDAO.
  */
-public class AppointmentDAOImpl
-        implements AppointmentDAO {
+public class AppointmentDAOImpl implements AppointmentDAO {
 
     private static final String BASE_SELECT_SQL = """
             SELECT
@@ -86,11 +85,16 @@ public class AppointmentDAOImpl
               ORDER BY a.appointment_time ASC
               """;
 
+    /*
+     * Searches appointment number, reason, patient name,
+     * dentist name and appointment status.
+     */
     private static final String SEARCH_SQL =
             BASE_SELECT_SQL
             + """
               WHERE
                     LOWER(a.appointment_number) LIKE ?
+                 OR LOWER(a.reason) LIKE ?
                  OR LOWER(p.first_name) LIKE ?
                  OR LOWER(p.last_name) LIKE ?
                  OR LOWER(u.full_name) LIKE ?
@@ -224,8 +228,7 @@ public class AppointmentDAOImpl
                     8,
                     appointment.getNotes());
 
-            int affectedRows =
-                    statement.executeUpdate();
+            int affectedRows = statement.executeUpdate();
 
             if (affectedRows != 1) {
                 throw new SQLException(
@@ -236,7 +239,6 @@ public class AppointmentDAOImpl
                     statement.getGeneratedKeys()) {
 
                 if (generatedKeys.next()) {
-
                     long generatedId =
                             generatedKeys.getLong(1);
 
@@ -310,7 +312,6 @@ public class AppointmentDAOImpl
         ) {
 
             while (resultSet.next()) {
-
                 appointments.add(
                         mapAppointment(resultSet));
             }
@@ -352,7 +353,6 @@ public class AppointmentDAOImpl
                     statement.executeQuery()) {
 
                 while (resultSet.next()) {
-
                     appointments.add(
                             mapAppointment(resultSet));
                 }
@@ -393,17 +393,21 @@ public class AppointmentDAOImpl
                             SEARCH_SQL)
         ) {
 
+            /*
+             * SEARCH_SQL contains six question-mark parameters.
+             * The same search text is applied to all fields.
+             */
             statement.setString(1, searchPattern);
             statement.setString(2, searchPattern);
             statement.setString(3, searchPattern);
             statement.setString(4, searchPattern);
             statement.setString(5, searchPattern);
+            statement.setString(6, searchPattern);
 
             try (ResultSet resultSet =
                     statement.executeQuery()) {
 
                 while (resultSet.next()) {
-
                     appointments.add(
                             mapAppointment(resultSet));
                 }
@@ -469,7 +473,6 @@ public class AppointmentDAOImpl
                     Time.valueOf(appointmentTime));
 
             if (excludeCurrentAppointment) {
-
                 statement.setLong(
                         4,
                         excludedAppointmentId);
@@ -479,7 +482,6 @@ public class AppointmentDAOImpl
                     statement.executeQuery()) {
 
                 if (resultSet.next()) {
-
                     int bookingCount =
                             resultSet.getInt(
                                     "booking_count");
@@ -656,7 +658,6 @@ public class AppointmentDAOImpl
                         "appointment_date");
 
         if (appointmentDate != null) {
-
             appointment.setAppointmentDate(
                     appointmentDate.toLocalDate());
         }
@@ -666,7 +667,6 @@ public class AppointmentDAOImpl
                         "appointment_time");
 
         if (appointmentTime != null) {
-
             appointment.setAppointmentTime(
                     appointmentTime.toLocalTime());
         }
@@ -693,7 +693,6 @@ public class AppointmentDAOImpl
                         "created_at");
 
         if (createdTimestamp != null) {
-
             appointment.setCreatedAt(
                     createdTimestamp.toLocalDateTime());
         }
@@ -703,7 +702,6 @@ public class AppointmentDAOImpl
                         "updated_at");
 
         if (updatedTimestamp != null) {
-
             appointment.setUpdatedAt(
                     updatedTimestamp.toLocalDateTime());
         }
@@ -745,13 +743,11 @@ public class AppointmentDAOImpl
         }
 
         if (appointment.getAppointmentDate() == null) {
-
             throw new IllegalArgumentException(
                     "Appointment date is required");
         }
 
         if (appointment.getAppointmentTime() == null) {
-
             throw new IllegalArgumentException(
                     "Appointment time is required");
         }

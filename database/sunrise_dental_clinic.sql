@@ -4,12 +4,15 @@
 -- CIS6003 Advanced Programming
 -- ============================================================
 
--- Create the database
+
+-- ============================================================
+-- CREATE AND SELECT DATABASE
+-- ============================================================
+
 CREATE DATABASE IF NOT EXISTS sunrise_dental_clinic
 CHARACTER SET utf8mb4
 COLLATE utf8mb4_unicode_ci;
 
--- Select the database
 USE sunrise_dental_clinic;
 
 
@@ -32,7 +35,12 @@ CREATE TABLE IF NOT EXISTS users (
         ON UPDATE CURRENT_TIMESTAMP,
 
     CONSTRAINT chk_user_role
-        CHECK (role IN ('RECEPTIONIST', 'DENTIST'))
+        CHECK (
+            role IN (
+                'RECEPTIONIST',
+                'DENTIST'
+            )
+        )
 );
 
 
@@ -59,10 +67,22 @@ CREATE TABLE IF NOT EXISTS patients (
         ON UPDATE CURRENT_TIMESTAMP,
 
     CONSTRAINT chk_patient_gender
-        CHECK (gender IN ('MALE', 'FEMALE', 'OTHER')),
+        CHECK (
+            gender IN (
+                'MALE',
+                'FEMALE',
+                'OTHER'
+            )
+        ),
 
-    INDEX idx_patient_name (first_name, last_name),
-    INDEX idx_patient_phone (phone)
+    INDEX idx_patient_name (
+        first_name,
+        last_name
+    ),
+
+    INDEX idx_patient_phone (
+        phone
+    )
 );
 
 
@@ -110,14 +130,19 @@ CREATE TABLE IF NOT EXISTS appointments (
             appointment_time
         ),
 
-    INDEX idx_appointment_date (appointment_date),
-    INDEX idx_appointment_patient (patient_id)
+    INDEX idx_appointment_date (
+        appointment_date
+    ),
+
+    INDEX idx_appointment_patient (
+        patient_id
+    )
 );
 
 
 -- ============================================================
 -- 4. TREATMENT CHARGES TABLE
--- Stores treatment types and their standard prices
+-- Stores treatment types and standard prices
 -- ============================================================
 
 CREATE TABLE IF NOT EXISTS treatment_charges (
@@ -130,7 +155,9 @@ CREATE TABLE IF NOT EXISTS treatment_charges (
     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
     CONSTRAINT chk_standard_charge
-        CHECK (standard_charge >= 0)
+        CHECK (
+            standard_charge >= 0
+        )
 );
 
 
@@ -159,7 +186,9 @@ CREATE TABLE IF NOT EXISTS treatments (
         FOREIGN KEY (dentist_id)
         REFERENCES users(user_id),
 
-    INDEX idx_treatment_appointment (appointment_id)
+    INDEX idx_treatment_appointment (
+        appointment_id
+    )
 );
 
 
@@ -185,10 +214,14 @@ CREATE TABLE IF NOT EXISTS treatment_details (
         REFERENCES treatment_charges(charge_id),
 
     CONSTRAINT chk_treatment_quantity
-        CHECK (quantity > 0),
+        CHECK (
+            quantity > 0
+        ),
 
     CONSTRAINT chk_treatment_unit_price
-        CHECK (unit_price >= 0)
+        CHECK (
+            unit_price >= 0
+        )
 );
 
 
@@ -214,13 +247,19 @@ CREATE TABLE IF NOT EXISTS bills (
         REFERENCES appointments(appointment_id),
 
     CONSTRAINT chk_bill_subtotal
-        CHECK (subtotal >= 0),
+        CHECK (
+            subtotal >= 0
+        ),
 
     CONSTRAINT chk_bill_discount
-        CHECK (discount >= 0),
+        CHECK (
+            discount >= 0
+        ),
 
     CONSTRAINT chk_bill_total
-        CHECK (total_amount >= 0),
+        CHECK (
+            total_amount >= 0
+        ),
 
     CONSTRAINT chk_payment_status
         CHECK (
@@ -258,7 +297,9 @@ CREATE TABLE IF NOT EXISTS payments (
         REFERENCES users(user_id),
 
     CONSTRAINT chk_payment_amount
-        CHECK (amount > 0),
+        CHECK (
+            amount > 0
+        ),
 
     CONSTRAINT chk_payment_method
         CHECK (
@@ -269,7 +310,54 @@ CREATE TABLE IF NOT EXISTS payments (
             )
         ),
 
-    INDEX idx_payment_bill (bill_id)
+    INDEX idx_payment_bill (
+        bill_id
+    )
+);
+
+
+-- ============================================================
+-- DEFAULT CLINIC USERS
+-- Password hashes will be configured during
+-- the Login and Authentication module
+-- ============================================================
+
+INSERT IGNORE INTO users (
+    username,
+    password_hash,
+    full_name,
+    role,
+    email,
+    phone,
+    active
+)
+VALUES
+(
+    'reception01',
+    'LOGIN_NOT_CONFIGURED',
+    'Sunrise Receptionist',
+    'RECEPTIONIST',
+    'reception@sunrisedental.lk',
+    '0812000001',
+    TRUE
+),
+(
+    'dentist.amara',
+    'LOGIN_NOT_CONFIGURED',
+    'Dr. Amara Silva',
+    'DENTIST',
+    'amara@sunrisedental.lk',
+    '0812000002',
+    TRUE
+),
+(
+    'dentist.kasun',
+    'LOGIN_NOT_CONFIGURED',
+    'Dr. Kasun Perera',
+    'DENTIST',
+    'kasun@sunrisedental.lk',
+    '0812000003',
+    TRUE
 );
 
 
@@ -327,7 +415,26 @@ VALUES
 -- DISPLAY CONFIRMATION INFORMATION
 -- ============================================================
 
-SELECT 'Sunrise Dental Clinic database created successfully.'
+SELECT
+    'Sunrise Dental Clinic database created successfully.'
     AS message;
 
 SHOW TABLES;
+
+SELECT
+    user_id,
+    username,
+    full_name,
+    role,
+    active
+FROM users
+ORDER BY user_id;
+
+SELECT
+    charge_id,
+    treatment_code,
+    treatment_name,
+    standard_charge,
+    active
+FROM treatment_charges
+ORDER BY charge_id;

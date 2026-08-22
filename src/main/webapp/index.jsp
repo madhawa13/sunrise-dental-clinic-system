@@ -1,154 +1,277 @@
 <%@ page language="java"
-    contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"
-    isErrorPage="true" %>
-
-<%@ taglib prefix="c"
-    uri="jakarta.tags.core" %>
+         contentType="text/html; charset=UTF-8"
+         pageEncoding="UTF-8" %>
 
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
+
     <meta charset="UTF-8">
 
     <meta name="viewport"
-        content="width=device-width, initial-scale=1.0">
+          content="width=device-width, initial-scale=1.0">
 
-    <title>
-        Error | Sunrise Dental Clinic
-    </title>
+    <title>Sunrise Dental Clinic System</title>
 
     <link rel="stylesheet"
-        href="${pageContext.request.contextPath}/assets/css/style.css">
+          href="${pageContext.request.contextPath}/assets/css/style.css">
+
 </head>
 
 <body>
 
-    <!-- Navigation Bar -->
-    <header class="navbar">
+<header class="main-header">
 
-        <div class="navbar-container">
+    <div class="container">
 
-            <a class="brand"
-                href="${pageContext.request.contextPath}/">
+        <h1>Sunrise Dental Clinic</h1>
 
-                <span class="brand-icon">
-                    🦷
-                </span>
+        <p>Appointment and Patient Management System</p>
 
-                <span class="brand-text">
+        <nav class="main-nav">
 
-                    <span class="brand-title">
-                        Sunrise Dental Clinic
-                    </span>
-
-                    <span class="brand-subtitle">
-                        Appointment and Patient Management
-                    </span>
-
-                </span>
-
+            <a href="${pageContext.request.contextPath}/"
+               class="active">
+                Dashboard
             </a>
 
-            <nav class="nav-links">
+            <a href="${pageContext.request.contextPath}/patients">
+                Patients
+            </a>
 
-                <a class="nav-link"
-                    href="${pageContext.request.contextPath}/">
-                    Dashboard
-                </a>
+            <a href="${pageContext.request.contextPath}/appointments">
+                Appointments
+            </a>
 
-                <a class="nav-link"
-                    href="${pageContext.request.contextPath}/patients">
-                    Patients
-                </a>
+        </nav>
 
-            </nav>
+    </div>
+
+</header>
+
+<main class="container">
+
+    <section class="page-header">
+
+        <div>
+
+            <h2>System Dashboard</h2>
+
+            <p>
+                Welcome to the Sunrise Dental Clinic management system.
+            </p>
 
         </div>
 
-    </header>
+    </section>
 
+    <section class="dashboard-grid">
 
-    <!-- Error Information -->
-    <main class="error-container">
+        <!-- Patient Management Card -->
 
-        <section class="card">
+        <article class="card dashboard-card">
 
-            <div class="card-body">
+            <div class="dashboard-icon">
+                &#128100;
+            </div>
 
-                <p class="error-code">
-                    !
-                </p>
+            <h3>Patient Management</h3>
 
-                <h1 class="error-title">
-                    Something went wrong
-                </h1>
+            <p>
+                Register new patients and view, search, update or
+                deactivate existing patient records.
+            </p>
 
-                <p class="error-message">
+            <div class="dashboard-actions">
 
-                    <c:choose>
+                <a class="btn btn-primary"
+                   href="${pageContext.request.contextPath}/patients">
 
-                        <c:when test="${not empty errorMessage}">
+                    Manage Patients
 
-                            <c:out value="${errorMessage}" />
+                </a>
 
-                        </c:when>
+                <a class="btn btn-secondary"
+                   href="${pageContext.request.contextPath}/patients?action=new">
 
-                        <c:when test="${not empty requestScope['jakarta.servlet.error.message']}">
+                    Register Patient
 
-                            <c:out
-                                value="${requestScope['jakarta.servlet.error.message']}" />
-
-                        </c:when>
-
-                        <c:otherwise>
-
-                            The requested operation could not
-                            be completed. Please try again.
-
-                        </c:otherwise>
-
-                    </c:choose>
-
-                </p>
-
-                <div class="form-actions"
-                    style="justify-content: center;
-                           border-top: 0;
-                           padding-top: 0;">
-
-                    <a class="btn btn-outline"
-                        href="javascript:history.back();">
-
-                        Go Back
-
-                    </a>
-
-                    <a class="btn btn-primary"
-                        href="${pageContext.request.contextPath}/">
-
-                        Return to Dashboard
-
-                    </a>
-
-                </div>
+                </a>
 
             </div>
 
-        </section>
+        </article>
 
-    </main>
+        <!-- Appointment Management Card -->
 
+        <article class="card dashboard-card">
 
-    <!-- Footer -->
-    <footer class="footer">
+            <div class="dashboard-icon">
+                &#128197;
+            </div>
 
-        Sunrise Dental Clinic
-        &copy; 2026 |
-        CIS6003 Advanced Programming Assignment
+            <h3>Appointment Management</h3>
 
-    </footer>
+            <p>
+                Schedule patient appointments, assign dentists and
+                manage appointment dates, times and statuses.
+            </p>
+
+            <div class="dashboard-actions">
+
+                <a class="btn btn-primary"
+                   href="${pageContext.request.contextPath}/appointments">
+
+                    Manage Appointments
+
+                </a>
+
+                <a class="btn btn-secondary"
+                   href="${pageContext.request.contextPath}/appointments?action=new">
+
+                    Schedule Appointment
+
+                </a>
+
+            </div>
+
+        </article>
+
+        <!-- Treatment Management Card -->
+
+        <article class="card dashboard-card">
+
+            <div class="dashboard-icon">
+                &#129463;
+            </div>
+
+            <h3>Treatment Records</h3>
+
+            <p>
+                Record diagnoses, dental treatments, prescriptions
+                and treatment details for completed appointments.
+            </p>
+
+            <div class="dashboard-actions">
+
+                <button class="btn btn-disabled"
+                        type="button"
+                        disabled>
+
+                    Coming Soon
+
+                </button>
+
+            </div>
+
+        </article>
+
+        <!-- Billing Management Card -->
+
+        <article class="card dashboard-card">
+
+            <div class="dashboard-icon">
+                &#128179;
+            </div>
+
+            <h3>Billing and Payments</h3>
+
+            <p>
+                Calculate treatment charges, prepare bills and
+                record payments received from patients.
+            </p>
+
+            <div class="dashboard-actions">
+
+                <button class="btn btn-disabled"
+                        type="button"
+                        disabled>
+
+                    Coming Soon
+
+                </button>
+
+            </div>
+
+        </article>
+
+    </section>
+
+    <section class="card system-information">
+
+        <h3>System Information</h3>
+
+        <div class="information-grid">
+
+            <div>
+
+                <strong>Module</strong>
+
+                <span>CIS6003 Advanced Programming</span>
+
+            </div>
+
+            <div>
+
+                <strong>Application</strong>
+
+                <span>Sunrise Dental Clinic System</span>
+
+            </div>
+
+            <div>
+
+                <strong>Technology</strong>
+
+                <span>Java, JSP, Servlets, JDBC and MySQL</span>
+
+            </div>
+
+            <div>
+
+                <strong>Server</strong>
+
+                <span>Apache Tomcat 10.1</span>
+
+            </div>
+
+            <div>
+
+                <strong>Testing</strong>
+
+                <span>JUnit 5, Mockito and TDD</span>
+
+            </div>
+
+            <div>
+
+                <strong>Status</strong>
+
+                <span class="status-badge status-completed">
+                    Application Running
+                </span>
+
+            </div>
+
+        </div>
+
+    </section>
+
+</main>
+
+<footer class="main-footer">
+
+    <div class="container">
+
+        <p>
+            &copy; 2026 Sunrise Dental Clinic.
+            CIS6003 Advanced Programming Assignment.
+        </p>
+
+    </div>
+
+</footer>
 
 </body>
 
