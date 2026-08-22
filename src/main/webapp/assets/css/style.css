@@ -1,0 +1,748 @@
+/* =========================================================
+   Sunrise Dental Clinic
+   Common Application Styles
+   ========================================================= */
+
+:root {
+    --primary-color: #0c6b73;
+    --primary-dark: #074c52;
+    --primary-light: #e7f6f7;
+
+    --secondary-color: #2563eb;
+    --secondary-dark: #1d4ed8;
+
+    --success-color: #15803d;
+    --success-background: #dcfce7;
+
+    --warning-color: #a16207;
+    --warning-background: #fef9c3;
+
+    --danger-color: #b91c1c;
+    --danger-background: #fee2e2;
+
+    --background-color: #f4f7fb;
+    --surface-color: #ffffff;
+
+    --text-color: #1f2937;
+    --text-muted: #64748b;
+
+    --border-color: #dbe3ec;
+
+    --shadow-small:
+        0 2px 8px rgba(15, 23, 42, 0.08);
+
+    --shadow-medium:
+        0 8px 24px rgba(15, 23, 42, 0.10);
+
+    --border-radius: 10px;
+}
+
+
+/* =========================================================
+   Basic Reset
+   ========================================================= */
+
+* {
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+
+    background-color: var(--background-color);
+
+    color: var(--text-color);
+
+    font-family:
+        "Segoe UI",
+        Arial,
+        Helvetica,
+        sans-serif;
+
+    line-height: 1.5;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+button,
+input,
+select,
+textarea {
+    font: inherit;
+}
+
+
+/* =========================================================
+   Navigation Bar
+   ========================================================= */
+
+.navbar {
+    background:
+        linear-gradient(
+            135deg,
+            var(--primary-dark),
+            var(--primary-color)
+        );
+
+    color: #ffffff;
+
+    box-shadow: var(--shadow-medium);
+}
+
+.navbar-container {
+    width: min(1180px, 92%);
+    min-height: 70px;
+
+    margin: 0 auto;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 24px;
+}
+
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.brand-icon {
+    width: 42px;
+    height: 42px;
+
+    display: grid;
+    place-items: center;
+
+    border-radius: 50%;
+
+    background-color: rgba(255, 255, 255, 0.18);
+
+    font-size: 23px;
+}
+
+.brand-text {
+    display: flex;
+    flex-direction: column;
+}
+
+.brand-title {
+    font-size: 19px;
+    font-weight: 700;
+}
+
+.brand-subtitle {
+    color: rgba(255, 255, 255, 0.78);
+
+    font-size: 12px;
+}
+
+.nav-links {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.nav-link {
+    padding: 9px 13px;
+
+    border-radius: 7px;
+
+    color: rgba(255, 255, 255, 0.88);
+
+    font-size: 14px;
+    font-weight: 600;
+
+    transition:
+        background-color 0.2s ease,
+        color 0.2s ease;
+}
+
+.nav-link:hover,
+.nav-link.active {
+    background-color: rgba(255, 255, 255, 0.16);
+    color: #ffffff;
+}
+
+
+/* =========================================================
+   Main Page Layout
+   ========================================================= */
+
+.page-container {
+    width: min(1180px, 92%);
+
+    margin: 0 auto;
+    padding: 34px 0 55px;
+}
+
+.page-header {
+    margin-bottom: 24px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 20px;
+}
+
+.page-title {
+    margin: 0 0 5px;
+
+    color: var(--primary-dark);
+
+    font-size: 30px;
+    line-height: 1.2;
+}
+
+.page-description {
+    margin: 0;
+
+    color: var(--text-muted);
+
+    font-size: 15px;
+}
+
+
+/* =========================================================
+   Card
+   ========================================================= */
+
+.card {
+    overflow: hidden;
+
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+
+    background-color: var(--surface-color);
+
+    box-shadow: var(--shadow-small);
+}
+
+.card-header {
+    padding: 20px 22px;
+
+    border-bottom: 1px solid var(--border-color);
+
+    background-color: #fbfdff;
+}
+
+.card-title {
+    margin: 0;
+
+    color: var(--primary-dark);
+
+    font-size: 19px;
+}
+
+.card-body {
+    padding: 24px;
+}
+
+
+/* =========================================================
+   Buttons
+   ========================================================= */
+
+.btn {
+    min-height: 40px;
+    padding: 9px 16px;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 7px;
+
+    border: 1px solid transparent;
+    border-radius: 7px;
+
+    cursor: pointer;
+
+    font-size: 14px;
+    font-weight: 650;
+
+    transition:
+        transform 0.15s ease,
+        background-color 0.2s ease,
+        border-color 0.2s ease;
+}
+
+.btn:hover {
+    transform: translateY(-1px);
+}
+
+.btn-primary {
+    background-color: var(--primary-color);
+    color: #ffffff;
+}
+
+.btn-primary:hover {
+    background-color: var(--primary-dark);
+}
+
+.btn-secondary {
+    background-color: var(--secondary-color);
+    color: #ffffff;
+}
+
+.btn-secondary:hover {
+    background-color: var(--secondary-dark);
+}
+
+.btn-outline {
+    border-color: var(--border-color);
+
+    background-color: #ffffff;
+    color: var(--text-color);
+}
+
+.btn-outline:hover {
+    border-color: var(--primary-color);
+    color: var(--primary-color);
+}
+
+.btn-danger {
+    background-color: var(--danger-color);
+    color: #ffffff;
+}
+
+.btn-danger:hover {
+    background-color: #991b1b;
+}
+
+.btn-small {
+    min-height: 34px;
+    padding: 6px 11px;
+
+    font-size: 13px;
+}
+
+
+/* =========================================================
+   Alerts
+   ========================================================= */
+
+.alert {
+    margin-bottom: 20px;
+    padding: 13px 16px;
+
+    border: 1px solid;
+    border-radius: 8px;
+
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.alert-success {
+    border-color: #86efac;
+
+    background-color: var(--success-background);
+    color: var(--success-color);
+}
+
+.alert-error {
+    border-color: #fca5a5;
+
+    background-color: var(--danger-background);
+    color: var(--danger-color);
+}
+
+.alert-warning {
+    border-color: #fde047;
+
+    background-color: var(--warning-background);
+    color: var(--warning-color);
+}
+
+
+/* =========================================================
+   Search Area
+   ========================================================= */
+
+.search-toolbar {
+    margin-bottom: 22px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 16px;
+}
+
+.search-form {
+    flex: 1;
+
+    display: flex;
+    align-items: center;
+
+    gap: 10px;
+}
+
+.search-input {
+    width: min(480px, 100%);
+    min-height: 42px;
+
+    padding: 9px 13px;
+
+    border: 1px solid var(--border-color);
+    border-radius: 7px;
+
+    background-color: #ffffff;
+
+    color: var(--text-color);
+
+    outline: none;
+}
+
+.search-input:focus {
+    border-color: var(--primary-color);
+
+    box-shadow:
+        0 0 0 3px rgba(12, 107, 115, 0.12);
+}
+
+
+/* =========================================================
+   Data Table
+   ========================================================= */
+
+.table-responsive {
+    width: 100%;
+    overflow-x: auto;
+}
+
+.data-table {
+    width: 100%;
+
+    border-collapse: collapse;
+}
+
+.data-table th,
+.data-table td {
+    padding: 14px 13px;
+
+    border-bottom: 1px solid var(--border-color);
+
+    text-align: left;
+    vertical-align: middle;
+
+    font-size: 14px;
+}
+
+.data-table th {
+    background-color: #f8fafc;
+
+    color: #475569;
+
+    font-size: 12px;
+    font-weight: 750;
+
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+}
+
+.data-table tbody tr:hover {
+    background-color: #f8fcfc;
+}
+
+.data-table tbody tr:last-child td {
+    border-bottom: 0;
+}
+
+.patient-number {
+    color: var(--primary-color);
+
+    font-weight: 700;
+}
+
+.patient-name {
+    font-weight: 650;
+}
+
+.table-actions {
+    display: flex;
+    align-items: center;
+
+    gap: 7px;
+}
+
+.inline-form {
+    display: inline;
+}
+
+
+/* =========================================================
+   Status Badges
+   ========================================================= */
+
+.badge {
+    padding: 4px 9px;
+
+    display: inline-flex;
+    align-items: center;
+
+    border-radius: 999px;
+
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.badge-active {
+    background-color: var(--success-background);
+    color: var(--success-color);
+}
+
+.badge-inactive {
+    background-color: var(--danger-background);
+    color: var(--danger-color);
+}
+
+
+/* =========================================================
+   Forms
+   ========================================================= */
+
+.form-grid {
+    display: grid;
+    grid-template-columns:
+        repeat(2, minmax(0, 1fr));
+
+    gap: 19px 22px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+
+    gap: 7px;
+}
+
+.form-group-full {
+    grid-column: 1 / -1;
+}
+
+.form-label {
+    color: #334155;
+
+    font-size: 14px;
+    font-weight: 650;
+}
+
+.required {
+    color: var(--danger-color);
+}
+
+.form-control {
+    width: 100%;
+    min-height: 43px;
+
+    padding: 9px 12px;
+
+    border: 1px solid var(--border-color);
+    border-radius: 7px;
+
+    background-color: #ffffff;
+    color: var(--text-color);
+
+    outline: none;
+
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.form-control:focus {
+    border-color: var(--primary-color);
+
+    box-shadow:
+        0 0 0 3px rgba(12, 107, 115, 0.12);
+}
+
+textarea.form-control {
+    min-height: 105px;
+    resize: vertical;
+}
+
+.form-help {
+    color: var(--text-muted);
+
+    font-size: 12px;
+}
+
+.form-actions {
+    margin-top: 25px;
+    padding-top: 20px;
+
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+
+    gap: 10px;
+
+    border-top: 1px solid var(--border-color);
+}
+
+
+/* =========================================================
+   Empty State and Error Page
+   ========================================================= */
+
+.empty-state {
+    padding: 48px 25px;
+
+    text-align: center;
+}
+
+.empty-state-icon {
+    margin-bottom: 12px;
+
+    font-size: 46px;
+}
+
+.empty-state-title {
+    margin: 0 0 7px;
+
+    color: var(--primary-dark);
+
+    font-size: 21px;
+}
+
+.empty-state-text {
+    margin: 0 0 18px;
+
+    color: var(--text-muted);
+}
+
+.error-container {
+    width: min(650px, 92%);
+
+    margin: 80px auto;
+
+    text-align: center;
+}
+
+.error-code {
+    margin: 0;
+
+    color: var(--primary-color);
+
+    font-size: 74px;
+    font-weight: 800;
+    line-height: 1;
+}
+
+.error-title {
+    margin: 15px 0 8px;
+
+    color: var(--primary-dark);
+
+    font-size: 28px;
+}
+
+.error-message {
+    margin-bottom: 25px;
+
+    color: var(--text-muted);
+}
+
+
+/* =========================================================
+   Footer
+   ========================================================= */
+
+.footer {
+    padding: 20px;
+
+    border-top: 1px solid var(--border-color);
+
+    background-color: #ffffff;
+
+    color: var(--text-muted);
+
+    text-align: center;
+    font-size: 13px;
+}
+
+
+/* =========================================================
+   Responsive Design
+   ========================================================= */
+
+@media (max-width: 850px) {
+
+    .navbar-container {
+        padding: 14px 0;
+
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .nav-links {
+        width: 100%;
+
+        overflow-x: auto;
+    }
+
+    .page-header,
+    .search-toolbar {
+        align-items: stretch;
+        flex-direction: column;
+    }
+
+    .search-form {
+        align-items: stretch;
+        flex-direction: column;
+    }
+
+    .search-input {
+        width: 100%;
+    }
+
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .form-group-full {
+        grid-column: auto;
+    }
+
+    .form-actions {
+        align-items: stretch;
+        flex-direction: column-reverse;
+    }
+
+    .form-actions .btn {
+        width: 100%;
+    }
+}
+
+@media (max-width: 540px) {
+
+    .page-container {
+        width: 94%;
+        padding-top: 24px;
+    }
+
+    .page-title {
+        font-size: 25px;
+    }
+
+    .card-body {
+        padding: 17px;
+    }
+
+    .data-table th,
+    .data-table td {
+        padding: 11px 9px;
+    }
+}
