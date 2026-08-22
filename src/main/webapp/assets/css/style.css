@@ -765,4 +765,10 @@ main.container {
     .empty-message {
         padding: 40px 12px;
     }
+} .form-help {
+    display: block;
+    margin-top: 3px;
+    color: #64748b;
+    font-size: 12px;
+    line-height: 1.5;
 }

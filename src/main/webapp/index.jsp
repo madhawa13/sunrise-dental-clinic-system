@@ -6,7 +6,6 @@
 <html lang="en">
 
 <head>
-
     <meta charset="UTF-8">
 
     <meta name="viewport"
@@ -16,13 +15,11 @@
 
     <link rel="stylesheet"
           href="${pageContext.request.contextPath}/assets/css/style.css">
-
 </head>
 
 <body>
 
 <header class="main-header">
-
     <div class="container">
 
         <h1>Sunrise Dental Clinic</h1>
@@ -44,10 +41,13 @@
                 Appointments
             </a>
 
+            <a href="${pageContext.request.contextPath}/treatments">
+                Treatments
+            </a>
+
         </nav>
 
     </div>
-
 </header>
 
 <main class="container">
@@ -55,20 +55,19 @@
     <section class="page-header">
 
         <div>
-
             <h2>System Dashboard</h2>
 
             <p>
-                Welcome to the Sunrise Dental Clinic management system.
+                Welcome to the Sunrise Dental Clinic
+                management system.
             </p>
-
         </div>
 
     </section>
 
     <section class="dashboard-grid">
 
-        <!-- Patient Management Card -->
+        <!-- Patient Management -->
 
         <article class="card dashboard-card">
 
@@ -79,8 +78,8 @@
             <h3>Patient Management</h3>
 
             <p>
-                Register new patients and view, search, update or
-                deactivate existing patient records.
+                Register new patients and view, search,
+                update or deactivate existing patient records.
             </p>
 
             <div class="dashboard-actions">
@@ -103,7 +102,7 @@
 
         </article>
 
-        <!-- Appointment Management Card -->
+        <!-- Appointment Management -->
 
         <article class="card dashboard-card">
 
@@ -114,8 +113,8 @@
             <h3>Appointment Management</h3>
 
             <p>
-                Schedule patient appointments, assign dentists and
-                manage appointment dates, times and statuses.
+                Schedule patient appointments, assign dentists,
+                prevent double bookings and manage statuses.
             </p>
 
             <div class="dashboard-actions">
@@ -138,7 +137,7 @@
 
         </article>
 
-        <!-- Treatment Management Card -->
+        <!-- Treatment Management -->
 
         <article class="card dashboard-card">
 
@@ -149,25 +148,32 @@
             <h3>Treatment Records</h3>
 
             <p>
-                Record diagnoses, dental treatments, prescriptions
-                and treatment details for completed appointments.
+                Record diagnoses, dental treatments,
+                prescriptions and treatment information
+                for completed appointments.
             </p>
 
             <div class="dashboard-actions">
 
-                <button class="btn btn-disabled"
-                        type="button"
-                        disabled>
+                <a class="btn btn-primary"
+                   href="${pageContext.request.contextPath}/treatments">
 
-                    Coming Soon
+                    Manage Treatments
 
-                </button>
+                </a>
+
+                <a class="btn btn-secondary"
+                   href="${pageContext.request.contextPath}/treatments?action=new">
+
+                    Add Treatment
+
+                </a>
 
             </div>
 
         </article>
 
-        <!-- Billing Management Card -->
+        <!-- Billing Management -->
 
         <article class="card dashboard-card">
 
@@ -178,8 +184,8 @@
             <h3>Billing and Payments</h3>
 
             <p>
-                Calculate treatment charges, prepare bills and
-                record payments received from patients.
+                Calculate treatment charges, prepare bills
+                and record payments received from patients.
             </p>
 
             <div class="dashboard-actions">
@@ -205,53 +211,48 @@
         <div class="information-grid">
 
             <div>
-
                 <strong>Module</strong>
-
                 <span>CIS6003 Advanced Programming</span>
-
             </div>
 
             <div>
-
                 <strong>Application</strong>
-
                 <span>Sunrise Dental Clinic System</span>
-
             </div>
 
             <div>
-
                 <strong>Technology</strong>
-
                 <span>Java, JSP, Servlets, JDBC and MySQL</span>
-
             </div>
 
             <div>
-
                 <strong>Server</strong>
-
                 <span>Apache Tomcat 10.1</span>
-
             </div>
 
             <div>
-
                 <strong>Testing</strong>
-
-                <span>JUnit 5, Mockito and TDD</span>
-
+                <span>JUnit 5, Mockito, H2 and TDD</span>
             </div>
 
             <div>
+                <strong>Completed Modules</strong>
+                <span>
+                    Patients, Appointments and Treatments
+                </span>
+            </div>
 
-                <strong>Status</strong>
+            <div>
+                <strong>Current Development</strong>
+                <span>Billing and Payments</span>
+            </div>
+
+            <div>
+                <strong>Application Status</strong>
 
                 <span class="status-badge status-completed">
-                    Application Running
+                    Running
                 </span>
-
             </div>
 
         </div>
@@ -261,7 +262,6 @@
 </main>
 
 <footer class="main-footer">
-
     <div class="container">
 
         <p>
@@ -270,9 +270,7 @@
         </p>
 
     </div>
-
 </footer>
 
 </body>
-
 </html>
