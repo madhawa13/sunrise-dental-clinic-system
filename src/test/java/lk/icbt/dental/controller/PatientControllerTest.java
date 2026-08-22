@@ -24,9 +24,11 @@ import lk.icbt.dental.service.PatientService;
 class PatientControllerTest {
 
     private PatientService patientService;
+
     private HttpServletRequest request;
     private HttpServletResponse response;
     private RequestDispatcher requestDispatcher;
+
     private PatientController patientController;
 
     @BeforeEach
@@ -45,7 +47,8 @@ class PatientControllerTest {
                 mock(RequestDispatcher.class);
 
         patientController =
-                new PatientController(patientService);
+                new PatientController(
+                        patientService);
 
         when(request.getRequestDispatcher(
                 any(String.class)))
@@ -55,7 +58,8 @@ class PatientControllerTest {
     @Test
     @DisplayName(
             "GET should display all active patients")
-    void shouldDisplayAllPatients() throws Exception {
+    void shouldDisplayAllPatients()
+            throws Exception {
 
         List<Patient> patients =
                 List.of(createPatient());
@@ -89,7 +93,8 @@ class PatientControllerTest {
     @Test
     @DisplayName(
             "GET should search patients using search term")
-    void shouldSearchPatients() throws Exception {
+    void shouldSearchPatients()
+            throws Exception {
 
         List<Patient> patients =
                 List.of(createPatient());
@@ -125,7 +130,9 @@ class PatientControllerTest {
     void shouldDisplayPatientEditForm()
             throws Exception {
 
-        Patient patient = createPatient();
+        Patient patient =
+                createPatient();
+
         patient.setPatientId(5L);
 
         when(request.getParameter("action"))
@@ -160,7 +167,8 @@ class PatientControllerTest {
     @Test
     @DisplayName(
             "POST should register a new patient")
-    void shouldRegisterPatient() throws Exception {
+    void shouldRegisterPatient()
+            throws Exception {
 
         configurePatientFormParameters();
 
@@ -176,7 +184,8 @@ class PatientControllerTest {
                 response);
 
         ArgumentCaptor<Patient> patientCaptor =
-                ArgumentCaptor.forClass(Patient.class);
+                ArgumentCaptor.forClass(
+                        Patient.class);
 
         verify(patientService)
                 .registerPatient(
@@ -210,7 +219,8 @@ class PatientControllerTest {
     @Test
     @DisplayName(
             "POST should update an existing patient")
-    void shouldUpdatePatient() throws Exception {
+    void shouldUpdatePatient()
+            throws Exception {
 
         configurePatientFormParameters();
 
@@ -232,7 +242,8 @@ class PatientControllerTest {
                 response);
 
         ArgumentCaptor<Patient> patientCaptor =
-                ArgumentCaptor.forClass(Patient.class);
+                ArgumentCaptor.forClass(
+                        Patient.class);
 
         verify(patientService)
                 .updatePatient(
@@ -258,7 +269,8 @@ class PatientControllerTest {
     @Test
     @DisplayName(
             "POST should soft delete an existing patient")
-    void shouldDeletePatient() throws Exception {
+    void shouldDeletePatient()
+            throws Exception {
 
         when(request.getParameter("action"))
                 .thenReturn("delete");
@@ -284,8 +296,7 @@ class PatientControllerTest {
     }
 
     /**
-     * Configures form parameters used by
-     * register and update controller tests.
+     * Configures patient form parameters.
      */
     private void configurePatientFormParameters() {
 
@@ -318,7 +329,7 @@ class PatientControllerTest {
     }
 
     /**
-     * Creates a patient for controller tests.
+     * Creates a patient used by controller tests.
      */
     private Patient createPatient() {
 

@@ -58,7 +58,7 @@ public class PatientController extends HttpServlet {
     }
 
     /**
-     * Handles patient page, search and edit requests.
+     * Handles patient list, search, new and edit requests.
      */
     @Override
     protected void doGet(
@@ -192,7 +192,7 @@ public class PatientController extends HttpServlet {
     }
 
     /**
-     * Searches patients and displays the result.
+     * Searches patients and displays the results.
      */
     private void searchPatients(
             HttpServletRequest request,
@@ -202,7 +202,8 @@ public class PatientController extends HttpServlet {
             IOException {
 
         String searchTerm =
-                request.getParameter("searchTerm");
+                request.getParameter(
+                        "searchTerm");
 
         List<Patient> patients =
                 patientService.searchPatients(
@@ -340,7 +341,7 @@ public class PatientController extends HttpServlet {
     }
 
     /**
-     * Creates a Patient from submitted HTML form fields.
+     * Creates a Patient using submitted form values.
      */
     private Patient createPatientFromRequest(
             HttpServletRequest request) {
@@ -374,7 +375,7 @@ public class PatientController extends HttpServlet {
     }
 
     /**
-     * Parses and validates a numeric ID.
+     * Parses and validates a patient ID.
      */
     private long parseId(String idValue) {
 
@@ -386,8 +387,16 @@ public class PatientController extends HttpServlet {
         }
 
         try {
-            return Long.parseLong(
-                    idValue.trim());
+            long patientId =
+                    Long.parseLong(
+                            idValue.trim());
+
+            if (patientId <= 0) {
+                throw new NumberFormatException(
+                        "Patient ID must be positive");
+            }
+
+            return patientId;
 
         } catch (NumberFormatException exception) {
 
@@ -398,7 +407,7 @@ public class PatientController extends HttpServlet {
     }
 
     /**
-     * Handles errors raised by GET operations.
+     * Handles GET-request errors.
      */
     private void handleControllerError(
             HttpServletRequest request,
@@ -440,12 +449,13 @@ public class PatientController extends HttpServlet {
     }
 
     /**
-     * Recreates submitted information after an error.
+     * Safely recreates submitted patient information.
      */
     private Patient createPatientSafely(
             HttpServletRequest request) {
 
-        Patient patient = new Patient();
+        Patient patient =
+                new Patient();
 
         patient.setPatientNumber(
                 request.getParameter(
@@ -496,7 +506,23 @@ public class PatientController extends HttpServlet {
                                 dateOfBirth));
 
             } catch (Exception ignored) {
-                // Keep the invalid field empty.
+                // Keep invalid date empty.
+            }
+        }
+
+        String patientId =
+                request.getParameter(
+                        "patientId");
+
+        if (patientId != null
+                && !patientId.isBlank()) {
+
+            try {
+                patient.setPatientId(
+                        Long.valueOf(patientId));
+
+            } catch (NumberFormatException ignored) {
+                // Keep invalid ID empty.
             }
         }
 
