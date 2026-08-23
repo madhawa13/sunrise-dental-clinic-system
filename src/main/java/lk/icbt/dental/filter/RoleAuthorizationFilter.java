@@ -14,7 +14,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
 /**
- * Restricts treatment and billing modules
+ * Restricts treatment, billing and report modules
  * according to the authenticated staff role.
  */
 @WebFilter(
@@ -22,7 +22,8 @@ import jakarta.servlet.http.HttpSession;
                 "/treatments",
                 "/treatment-details",
                 "/bills",
-                "/payments"
+                "/payments",
+                "/reports"
         })
 public class RoleAuthorizationFilter
         implements Filter {
@@ -83,10 +84,10 @@ public class RoleAuthorizationFilter
                 || requestPath.equals(
                         "/treatment-details");
 
-        boolean billingModule =
+        boolean receptionistModule =
                 requestPath.equals("/bills")
-                || requestPath.equals(
-                        "/payments");
+                || requestPath.equals("/payments")
+                || requestPath.equals("/reports");
 
         if (treatmentModule
                 && !ROLE_DENTIST.equals(
@@ -97,7 +98,7 @@ public class RoleAuthorizationFilter
             return;
         }
 
-        if (billingModule
+        if (receptionistModule
                 && !ROLE_RECEPTIONIST.equals(
                         userRole)) {
 

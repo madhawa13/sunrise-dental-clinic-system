@@ -34,8 +34,7 @@ class RoleAuthorizationFilterTest {
             authorizationFilter;
 
     /**
-     * Creates fresh test doubles
-     * before every test.
+     * Creates fresh test doubles.
      */
     @BeforeEach
     void setUp() {
@@ -62,9 +61,6 @@ class RoleAuthorizationFilterTest {
                 .thenReturn(session);
     }
 
-    /**
-     * Receptionists cannot manage treatments.
-     */
     @Test
     @DisplayName(
             "Should block receptionist from treatments")
@@ -83,10 +79,6 @@ class RoleAuthorizationFilterTest {
         verifyForbiddenResponse();
     }
 
-    /**
-     * Receptionists cannot manage
-     * treatment charge details.
-     */
     @Test
     @DisplayName(
             "Should block receptionist from treatment charges")
@@ -105,9 +97,6 @@ class RoleAuthorizationFilterTest {
         verifyForbiddenResponse();
     }
 
-    /**
-     * Dentists may access treatment management.
-     */
     @Test
     @DisplayName(
             "Should allow dentist to access treatments")
@@ -123,15 +112,9 @@ class RoleAuthorizationFilterTest {
                 response,
                 filterChain);
 
-        verify(filterChain)
-                .doFilter(
-                        request,
-                        response);
+        verifyAllowedRequest();
     }
 
-    /**
-     * Dentists cannot manage bills.
-     */
     @Test
     @DisplayName(
             "Should block dentist from billing")
@@ -150,9 +133,6 @@ class RoleAuthorizationFilterTest {
         verifyForbiddenResponse();
     }
 
-    /**
-     * Receptionists may access billing.
-     */
     @Test
     @DisplayName(
             "Should allow receptionist to access billing")
@@ -168,16 +148,53 @@ class RoleAuthorizationFilterTest {
                 response,
                 filterChain);
 
-        verify(filterChain)
-                .doFilter(
-                        request,
-                        response);
+        verifyAllowedRequest();
     }
 
     /**
-     * A request without role information
-     * must return to login.
+     * Receptionists may access
+     * financial reports.
      */
+    @Test
+    @DisplayName(
+            "Should allow receptionist to access reports")
+    void shouldAllowReceptionistToAccessReports()
+            throws Exception {
+
+        prepareRequest(
+                "/reports",
+                "RECEPTIONIST");
+
+        authorizationFilter.doFilter(
+                request,
+                response,
+                filterChain);
+
+        verifyAllowedRequest();
+    }
+
+    /**
+     * Dentists may not access
+     * financial reports.
+     */
+    @Test
+    @DisplayName(
+            "Should block dentist from reports")
+    void shouldBlockDentistFromReports()
+            throws Exception {
+
+        prepareRequest(
+                "/reports",
+                "DENTIST");
+
+        authorizationFilter.doFilter(
+                request,
+                response,
+                filterChain);
+
+        verifyForbiddenResponse();
+    }
+
     @Test
     @DisplayName(
             "Should redirect request without user role")
@@ -187,7 +204,7 @@ class RoleAuthorizationFilterTest {
         when(request.getRequestURI())
                 .thenReturn(
                         CONTEXT_PATH
-                        + "/bills");
+                        + "/reports");
 
         when(request.getSession(false))
                 .thenReturn(null);
@@ -209,7 +226,7 @@ class RoleAuthorizationFilterTest {
     }
 
     /**
-     * Configures the requested module and role.
+     * Configures a protected request.
      */
     private void prepareRequest(
             String applicationPath,
@@ -225,7 +242,19 @@ class RoleAuthorizationFilterTest {
     }
 
     /**
-     * Verifies the standard forbidden response.
+     * Verifies a permitted request.
+     */
+    private void verifyAllowedRequest()
+            throws Exception {
+
+        verify(filterChain)
+                .doFilter(
+                        request,
+                        response);
+    }
+
+    /**
+     * Verifies a forbidden response.
      */
     private void verifyForbiddenResponse()
             throws Exception {

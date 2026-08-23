@@ -1459,4 +1459,70 @@ main.container {
     .help-card {
         min-height: auto;
     }
+}/* ==========================================================
+   20. APPOINTMENT AND BILLING REPORT
+   ========================================================== */
+
+.report-filter-card {
+    border-left: 5px solid #0284c7;
+}
+
+.report-paid {
+    color: #15803d;
+}
+
+.report-outstanding {
+    color: #b91c1c;
+}
+
+.report-source {
+    color: #64748b;
+    font-size: 12px;
+}
+
+@media print {
+
+    .main-header,
+    .main-footer,
+    .report-filter-card,
+    .page-header .btn,
+    .logout-form {
+        display: none !important;
+    }
+
+    body {
+        color: #000000;
+        background-color: #ffffff;
+        font-size: 11px;
+    }
+
+    main.container {
+        width: 100%;
+        max-width: none;
+        padding: 0;
+    }
+
+    .card {
+        padding: 12px;
+        border: 1px solid #bbbbbb;
+        box-shadow: none;
+        break-inside: avoid;
+    }
+
+    .billing-summary-grid {
+        grid-template-columns:
+            repeat(4, minmax(0, 1fr));
+        gap: 8px;
+    }
+
+    .data-table th,
+    .data-table td {
+        padding: 7px 5px;
+        font-size: 10px;
+    }
+
+    .status-badge {
+        padding: 4px 6px;
+        font-size: 9px;
+    }
 }

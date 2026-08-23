@@ -105,12 +105,15 @@
 
             <c:if test="${sessionScope.userRole == 'RECEPTIONIST'}">
 
-                <a href="${pageContext.request.contextPath}/bills">
-                    Billing
-                </a>
+    <a href="${pageContext.request.contextPath}/bills">
+        Billing
+    </a>
 
-            </c:if>
+    <a href="${pageContext.request.contextPath}/reports">
+        Reports
+    </a>
 
+</c:if>
             <a href="${pageContext.request.contextPath}/help">
                 Help
             </a>
