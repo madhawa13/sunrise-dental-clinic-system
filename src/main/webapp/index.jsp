@@ -6,11 +6,9 @@
            uri="jakarta.tags.core" %>
 
 <!DOCTYPE html>
-
 <html lang="en">
 
 <head>
-
     <meta charset="UTF-8">
 
     <meta name="viewport"
@@ -20,26 +18,21 @@
 
     <link rel="stylesheet"
           href="${pageContext.request.contextPath}/assets/css/style.css">
-
 </head>
 
 <body>
 
 <header class="main-header">
-
     <div class="container">
 
         <div class="header-top">
 
             <div>
-
                 <h1>Sunrise Dental Clinic</h1>
 
                 <p>
-                    Appointment and Patient
-                    Management System
+                    Appointment and Patient Management System
                 </p>
-
             </div>
 
             <div class="user-panel">
@@ -47,18 +40,14 @@
                 <div class="user-information">
 
                     <span class="user-welcome">
-
                         Welcome,
                         <strong>
                             <c:out value="${sessionScope.username}"/>
                         </strong>
-
                     </span>
 
                     <span class="user-role">
-
                         <c:out value="${sessionScope.userRole}"/>
-
                     </span>
 
                 </div>
@@ -69,15 +58,12 @@
 
                     <button type="submit"
                             class="btn logout-button">
-
                         Logout
-
                     </button>
 
                 </form>
 
             </div>
-
         </div>
 
         <nav class="main-nav">
@@ -105,15 +91,16 @@
 
             <c:if test="${sessionScope.userRole == 'RECEPTIONIST'}">
 
-    <a href="${pageContext.request.contextPath}/bills">
-        Billing
-    </a>
+                <a href="${pageContext.request.contextPath}/bills">
+                    Billing
+                </a>
 
-    <a href="${pageContext.request.contextPath}/reports">
-        Reports
-    </a>
+                <a href="${pageContext.request.contextPath}/reports">
+                    Reports
+                </a>
 
-</c:if>
+            </c:if>
+
             <a href="${pageContext.request.contextPath}/help">
                 Help
             </a>
@@ -121,30 +108,25 @@
         </nav>
 
     </div>
-
 </header>
 
 <main class="container">
 
     <div class="alert alert-success">
-
-        Login successful. Welcome to the
-        Sunrise Dental Clinic management system,
+        Login successful. Welcome to the Sunrise Dental Clinic
+        management system,
         <c:out value="${sessionScope.username}"/>.
-
     </div>
 
     <section class="page-header">
 
         <div>
-
             <h2>System Dashboard</h2>
 
             <p>
-                Manage clinic information using
-                your authorized staff account.
+                Manage clinic information using your
+                authorized staff account.
             </p>
-
         </div>
 
     </section>
@@ -152,7 +134,6 @@
     <section class="dashboard-grid">
 
         <!-- Patient Management -->
-
         <article class="card dashboard-card">
 
             <div class="dashboard-icon">
@@ -162,27 +143,22 @@
             <h3>Patient Management</h3>
 
             <p>
-                Register new patients and view,
-                search, update or deactivate
-                existing patient records.
+                Register new patients and view, search,
+                update or deactivate existing patient records.
             </p>
 
             <div class="dashboard-actions">
 
                 <a class="btn btn-primary"
                    href="${pageContext.request.contextPath}/patients">
-
                     Manage Patients
-
                 </a>
 
                 <c:if test="${sessionScope.userRole == 'RECEPTIONIST'}">
 
                     <a class="btn btn-secondary"
                        href="${pageContext.request.contextPath}/patients?action=new">
-
                         Register Patient
-
                     </a>
 
                 </c:if>
@@ -192,7 +168,6 @@
         </article>
 
         <!-- Appointment Management -->
-
         <article class="card dashboard-card">
 
             <div class="dashboard-icon">
@@ -202,26 +177,22 @@
             <h3>Appointment Management</h3>
 
             <p>
-                View clinic appointments, assigned
-                dentists, dates, times and statuses.
+                View clinic appointments, assigned dentists,
+                dates, times and statuses.
             </p>
 
             <div class="dashboard-actions">
 
                 <a class="btn btn-primary"
                    href="${pageContext.request.contextPath}/appointments">
-
                     Manage Appointments
-
                 </a>
 
                 <c:if test="${sessionScope.userRole == 'RECEPTIONIST'}">
 
                     <a class="btn btn-secondary"
                        href="${pageContext.request.contextPath}/appointments?action=new">
-
                         Schedule Appointment
-
                     </a>
 
                 </c:if>
@@ -231,7 +202,6 @@
         </article>
 
         <!-- Dentist-only Treatment Management -->
-
         <c:if test="${sessionScope.userRole == 'DENTIST'}">
 
             <article class="card dashboard-card">
@@ -252,16 +222,12 @@
 
                     <a class="btn btn-primary"
                        href="${pageContext.request.contextPath}/treatments">
-
                         Manage Treatments
-
                     </a>
 
                     <a class="btn btn-secondary"
                        href="${pageContext.request.contextPath}/treatments?action=new">
-
                         Add Treatment
-
                     </a>
 
                 </div>
@@ -271,7 +237,6 @@
         </c:if>
 
         <!-- Receptionist-only Billing Management -->
-
         <c:if test="${sessionScope.userRole == 'RECEPTIONIST'}">
 
             <article class="card dashboard-card">
@@ -283,25 +248,46 @@
                 <h3>Billing and Payments</h3>
 
                 <p>
-                    Calculate treatment charges,
-                    prepare printable bills and record
-                    patient payments.
+                    Calculate treatment charges, prepare
+                    printable bills and record patient payments.
                 </p>
 
                 <div class="dashboard-actions">
 
                     <a class="btn btn-primary"
                        href="${pageContext.request.contextPath}/bills">
-
                         Manage Bills
-
                     </a>
 
                     <a class="btn btn-secondary"
                        href="${pageContext.request.contextPath}/bills?action=new">
-
                         Create Bill
+                    </a>
 
+                </div>
+
+            </article>
+
+            <!-- Receptionist-only Reports -->
+            <article class="card dashboard-card">
+
+                <div class="dashboard-icon">
+                    &#128202;
+                </div>
+
+                <h3>Appointment Billing Reports</h3>
+
+                <p>
+                    View appointment, patient, dentist,
+                    treatment, billing and payment information
+                    in a combined report.
+                </p>
+
+                <div class="dashboard-actions">
+
+                    <a class="btn btn-primary"
+                       href="${pageContext.request.contextPath}/reports">
+                        View Reports
                     </a>
 
                 </div>
@@ -311,7 +297,6 @@
         </c:if>
 
         <!-- Help -->
-
         <article class="card dashboard-card">
 
             <div class="dashboard-icon">
@@ -330,103 +315,12 @@
 
                 <a class="btn btn-primary"
                    href="${pageContext.request.contextPath}/help">
-
                     Open Help
-
                 </a>
 
             </div>
 
         </article>
-
-    </section>
-
-    <section class="card system-information">
-
-        <h3>System Information</h3>
-
-        <div class="information-grid">
-
-            <div>
-
-                <strong>Module</strong>
-
-                <span>
-                    CIS6003 Advanced Programming
-                </span>
-
-            </div>
-
-            <div>
-
-                <strong>Application</strong>
-
-                <span>
-                    Sunrise Dental Clinic System
-                </span>
-
-            </div>
-
-            <div>
-
-                <strong>Technology</strong>
-
-                <span>
-                    Java, JSP, Servlets,
-                    JDBC and MySQL
-                </span>
-
-            </div>
-
-            <div>
-
-                <strong>Server</strong>
-
-                <span>Apache Tomcat 10.1</span>
-
-            </div>
-
-            <div>
-
-                <strong>Testing</strong>
-
-                <span>
-                    JUnit 5, Mockito, H2 and TDD
-                </span>
-
-            </div>
-
-            <div>
-
-                <strong>Authenticated User</strong>
-
-                <span>
-                    <c:out value="${sessionScope.username}"/>
-                </span>
-
-            </div>
-
-            <div>
-
-                <strong>Authenticated Role</strong>
-
-                <span>
-                    <c:out value="${sessionScope.userRole}"/>
-                </span>
-
-            </div>
-
-            <div>
-
-                <strong>Application Status</strong>
-
-                <span class="status-badge status-completed">
-                    Running
-                </span>
-
-            </div>
-
-        </div>
 
     </section>
 
@@ -446,5 +340,4 @@
 </footer>
 
 </body>
-
 </html>

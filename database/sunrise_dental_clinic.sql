@@ -18,20 +18,44 @@ USE sunrise_dental_clinic;
 
 -- ============================================================
 -- 1. USERS TABLE
--- Stores Receptionist and Dentist login accounts
+-- Stores Receptionist and Dentist accounts.
+-- Passwords are stored as secure PBKDF2 hashes.
 -- ============================================================
 
 CREATE TABLE IF NOT EXISTS users (
-    user_id BIGINT PRIMARY KEY AUTO_INCREMENT,
-    username VARCHAR(50) NOT NULL UNIQUE,
-    password_hash VARCHAR(255) NOT NULL,
-    full_name VARCHAR(100) NOT NULL,
-    role VARCHAR(20) NOT NULL,
+
+    user_id BIGINT
+        PRIMARY KEY
+        AUTO_INCREMENT,
+
+    username VARCHAR(50)
+        NOT NULL
+        UNIQUE,
+
+    password_hash VARCHAR(255)
+        NOT NULL,
+
+    full_name VARCHAR(100)
+        NOT NULL,
+
+    role VARCHAR(20)
+        NOT NULL,
+
     email VARCHAR(100),
+
     phone VARCHAR(20),
-    active BOOLEAN NOT NULL DEFAULT TRUE,
-    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+
+    active BOOLEAN
+        NOT NULL
+        DEFAULT TRUE,
+
+    created_at TIMESTAMP
+        NOT NULL
+        DEFAULT CURRENT_TIMESTAMP,
+
+    updated_at TIMESTAMP
+        NOT NULL
+        DEFAULT CURRENT_TIMESTAMP
         ON UPDATE CURRENT_TIMESTAMP,
 
     CONSTRAINT chk_user_role
@@ -46,24 +70,54 @@ CREATE TABLE IF NOT EXISTS users (
 
 -- ============================================================
 -- 2. PATIENTS TABLE
--- Stores registered patient information
+-- Stores registered patient information.
 -- ============================================================
 
 CREATE TABLE IF NOT EXISTS patients (
-    patient_id BIGINT PRIMARY KEY AUTO_INCREMENT,
-    patient_number VARCHAR(20) NOT NULL UNIQUE,
-    first_name VARCHAR(50) NOT NULL,
-    last_name VARCHAR(50) NOT NULL,
-    date_of_birth DATE NOT NULL,
-    gender VARCHAR(10) NOT NULL,
-    nic_number VARCHAR(20) UNIQUE,
-    phone VARCHAR(20) NOT NULL,
+
+    patient_id BIGINT
+        PRIMARY KEY
+        AUTO_INCREMENT,
+
+    patient_number VARCHAR(20)
+        NOT NULL
+        UNIQUE,
+
+    first_name VARCHAR(50)
+        NOT NULL,
+
+    last_name VARCHAR(50)
+        NOT NULL,
+
+    date_of_birth DATE
+        NOT NULL,
+
+    gender VARCHAR(10)
+        NOT NULL,
+
+    nic_number VARCHAR(20)
+        UNIQUE,
+
+    phone VARCHAR(20)
+        NOT NULL,
+
     email VARCHAR(100),
+
     address VARCHAR(255),
+
     medical_notes TEXT,
-    active BOOLEAN NOT NULL DEFAULT TRUE,
-    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+
+    active BOOLEAN
+        NOT NULL
+        DEFAULT TRUE,
+
+    created_at TIMESTAMP
+        NOT NULL
+        DEFAULT CURRENT_TIMESTAMP,
+
+    updated_at TIMESTAMP
+        NOT NULL
+        DEFAULT CURRENT_TIMESTAMP
         ON UPDATE CURRENT_TIMESTAMP,
 
     CONSTRAINT chk_patient_gender
@@ -88,21 +142,47 @@ CREATE TABLE IF NOT EXISTS patients (
 
 -- ============================================================
 -- 3. APPOINTMENTS TABLE
--- Stores patient appointments and assigned dentists
+-- Stores appointments and assigned dentists.
 -- ============================================================
 
 CREATE TABLE IF NOT EXISTS appointments (
-    appointment_id BIGINT PRIMARY KEY AUTO_INCREMENT,
-    appointment_number VARCHAR(20) NOT NULL UNIQUE,
-    patient_id BIGINT NOT NULL,
-    dentist_id BIGINT NOT NULL,
-    appointment_date DATE NOT NULL,
-    appointment_time TIME NOT NULL,
-    reason VARCHAR(255) NOT NULL,
-    status VARCHAR(20) NOT NULL DEFAULT 'SCHEDULED',
+
+    appointment_id BIGINT
+        PRIMARY KEY
+        AUTO_INCREMENT,
+
+    appointment_number VARCHAR(30)
+        NOT NULL
+        UNIQUE,
+
+    patient_id BIGINT
+        NOT NULL,
+
+    dentist_id BIGINT
+        NOT NULL,
+
+    appointment_date DATE
+        NOT NULL,
+
+    appointment_time TIME
+        NOT NULL,
+
+    reason VARCHAR(255)
+        NOT NULL,
+
+    status VARCHAR(20)
+        NOT NULL
+        DEFAULT 'SCHEDULED',
+
     notes TEXT,
-    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+
+    created_at TIMESTAMP
+        NOT NULL
+        DEFAULT CURRENT_TIMESTAMP,
+
+    updated_at TIMESTAMP
+        NOT NULL
+        DEFAULT CURRENT_TIMESTAMP
         ON UPDATE CURRENT_TIMESTAMP,
 
     CONSTRAINT fk_appointment_patient
@@ -142,17 +222,34 @@ CREATE TABLE IF NOT EXISTS appointments (
 
 -- ============================================================
 -- 4. TREATMENT CHARGES TABLE
--- Stores treatment types and standard prices
+-- Stores treatment types and standard prices.
 -- ============================================================
 
 CREATE TABLE IF NOT EXISTS treatment_charges (
-    charge_id BIGINT PRIMARY KEY AUTO_INCREMENT,
-    treatment_code VARCHAR(20) NOT NULL UNIQUE,
-    treatment_name VARCHAR(100) NOT NULL,
+
+    charge_id BIGINT
+        PRIMARY KEY
+        AUTO_INCREMENT,
+
+    treatment_code VARCHAR(20)
+        NOT NULL
+        UNIQUE,
+
+    treatment_name VARCHAR(100)
+        NOT NULL,
+
     description VARCHAR(255),
-    standard_charge DECIMAL(10,2) NOT NULL,
-    active BOOLEAN NOT NULL DEFAULT TRUE,
-    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+
+    standard_charge DECIMAL(10, 2)
+        NOT NULL,
+
+    active BOOLEAN
+        NOT NULL
+        DEFAULT TRUE,
+
+    created_at TIMESTAMP
+        NOT NULL
+        DEFAULT CURRENT_TIMESTAMP,
 
     CONSTRAINT chk_standard_charge
         CHECK (
@@ -163,19 +260,38 @@ CREATE TABLE IF NOT EXISTS treatment_charges (
 
 -- ============================================================
 -- 5. TREATMENTS TABLE
--- Stores diagnosis, treatment and prescription details
+-- Stores diagnosis, treatment and prescription details.
 -- ============================================================
 
 CREATE TABLE IF NOT EXISTS treatments (
-    treatment_id BIGINT PRIMARY KEY AUTO_INCREMENT,
-    appointment_id BIGINT NOT NULL,
-    dentist_id BIGINT NOT NULL,
-    treatment_date DATE NOT NULL,
+
+    treatment_id BIGINT
+        PRIMARY KEY
+        AUTO_INCREMENT,
+
+    appointment_id BIGINT
+        NOT NULL,
+
+    dentist_id BIGINT
+        NOT NULL,
+
+    treatment_date DATE
+        NOT NULL,
+
     diagnosis VARCHAR(500),
-    treatment_notes TEXT NOT NULL,
+
+    treatment_notes TEXT
+        NOT NULL,
+
     prescription TEXT,
-    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+
+    created_at TIMESTAMP
+        NOT NULL
+        DEFAULT CURRENT_TIMESTAMP,
+
+    updated_at TIMESTAMP
+        NOT NULL
+        DEFAULT CURRENT_TIMESTAMP
         ON UPDATE CURRENT_TIMESTAMP,
 
     CONSTRAINT fk_treatment_appointment
@@ -188,21 +304,38 @@ CREATE TABLE IF NOT EXISTS treatments (
 
     INDEX idx_treatment_appointment (
         appointment_id
+    ),
+
+    INDEX idx_treatment_date (
+        treatment_date
     )
 );
 
 
 -- ============================================================
 -- 6. TREATMENT DETAILS TABLE
--- Connects treatment records with treatment charges
+-- Connects treatments with standard treatment charges.
 -- ============================================================
 
 CREATE TABLE IF NOT EXISTS treatment_details (
-    treatment_detail_id BIGINT PRIMARY KEY AUTO_INCREMENT,
-    treatment_id BIGINT NOT NULL,
-    charge_id BIGINT NOT NULL,
-    quantity INT NOT NULL DEFAULT 1,
-    unit_price DECIMAL(10,2) NOT NULL,
+
+    treatment_detail_id BIGINT
+        PRIMARY KEY
+        AUTO_INCREMENT,
+
+    treatment_id BIGINT
+        NOT NULL,
+
+    charge_id BIGINT
+        NOT NULL,
+
+    quantity INT
+        NOT NULL
+        DEFAULT 1,
+
+    unit_price DECIMAL(10, 2)
+        NOT NULL,
+
     notes VARCHAR(255),
 
     CONSTRAINT fk_detail_treatment
@@ -221,25 +354,54 @@ CREATE TABLE IF NOT EXISTS treatment_details (
     CONSTRAINT chk_treatment_unit_price
         CHECK (
             unit_price >= 0
-        )
+        ),
+
+    INDEX idx_detail_treatment (
+        treatment_id
+    )
 );
 
 
 -- ============================================================
 -- 7. BILLS TABLE
--- Stores bills calculated for completed appointments
+-- Stores bills calculated for appointments.
 -- ============================================================
 
 CREATE TABLE IF NOT EXISTS bills (
-    bill_id BIGINT PRIMARY KEY AUTO_INCREMENT,
-    bill_number VARCHAR(20) NOT NULL UNIQUE,
-    appointment_id BIGINT NOT NULL UNIQUE,
-    subtotal DECIMAL(10,2) NOT NULL,
-    discount DECIMAL(10,2) NOT NULL DEFAULT 0.00,
-    total_amount DECIMAL(10,2) NOT NULL,
-    payment_status VARCHAR(20) NOT NULL DEFAULT 'UNPAID',
-    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+
+    bill_id BIGINT
+        PRIMARY KEY
+        AUTO_INCREMENT,
+
+    bill_number VARCHAR(30)
+        NOT NULL
+        UNIQUE,
+
+    appointment_id BIGINT
+        NOT NULL
+        UNIQUE,
+
+    subtotal DECIMAL(10, 2)
+        NOT NULL,
+
+    discount DECIMAL(10, 2)
+        NOT NULL
+        DEFAULT 0.00,
+
+    total_amount DECIMAL(10, 2)
+        NOT NULL,
+
+    payment_status VARCHAR(20)
+        NOT NULL
+        DEFAULT 'UNPAID',
+
+    created_at TIMESTAMP
+        NOT NULL
+        DEFAULT CURRENT_TIMESTAMP,
+
+    updated_at TIMESTAMP
+        NOT NULL
+        DEFAULT CURRENT_TIMESTAMP
         ON UPDATE CURRENT_TIMESTAMP,
 
     CONSTRAINT fk_bill_appointment
@@ -274,18 +436,37 @@ CREATE TABLE IF NOT EXISTS bills (
 
 -- ============================================================
 -- 8. PAYMENTS TABLE
--- Stores payments made for bills
+-- Stores payments made for bills.
 -- ============================================================
 
 CREATE TABLE IF NOT EXISTS payments (
-    payment_id BIGINT PRIMARY KEY AUTO_INCREMENT,
-    payment_number VARCHAR(20) NOT NULL UNIQUE,
-    bill_id BIGINT NOT NULL,
-    amount DECIMAL(10,2) NOT NULL,
-    payment_method VARCHAR(20) NOT NULL,
-    payment_date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    received_by BIGINT NOT NULL,
+
+    payment_id BIGINT
+        PRIMARY KEY
+        AUTO_INCREMENT,
+
+    payment_number VARCHAR(30)
+        NOT NULL
+        UNIQUE,
+
+    bill_id BIGINT
+        NOT NULL,
+
+    amount DECIMAL(10, 2)
+        NOT NULL,
+
+    payment_method VARCHAR(20)
+        NOT NULL,
+
+    payment_date TIMESTAMP
+        NOT NULL
+        DEFAULT CURRENT_TIMESTAMP,
+
+    received_by BIGINT
+        NOT NULL,
+
     reference_number VARCHAR(100),
+
     notes VARCHAR(255),
 
     CONSTRAINT fk_payment_bill
@@ -312,17 +493,32 @@ CREATE TABLE IF NOT EXISTS payments (
 
     INDEX idx_payment_bill (
         bill_id
+    ),
+
+    INDEX idx_payment_date (
+        payment_date
     )
 );
 
 
 -- ============================================================
--- DEFAULT CLINIC USERS
--- Password hashes will be configured during
--- the Login and Authentication module
+-- DEFAULT AUTHORIZED STAFF ACCOUNTS
+--
+-- Username: reception01
+-- Password: Reception@123
+--
+-- Username: dentist.amara
+-- Password: Dentist@123
+--
+-- Username: dentist.kasun
+-- Password: Dentist@456
+--
+-- Passwords are stored using PBKDF2-HMAC-SHA256.
+-- Plain-text passwords are never stored.
 -- ============================================================
 
 INSERT IGNORE INTO users (
+
     username,
     password_hash,
     full_name,
@@ -330,47 +526,50 @@ INSERT IGNORE INTO users (
     email,
     phone,
     active
+
 )
 VALUES
 (
     'reception01',
-    'LOGIN_NOT_CONFIGURED',
+    '120000:pNGrV8CMHzsm1NBc5ndLIw==:6sM4KS7Ejs7IiXfyGhAQh7d4NV3n30mMZfnjvDXZcr0=',
     'Sunrise Receptionist',
     'RECEPTIONIST',
     'reception@sunrisedental.lk',
-    '0812000001',
+    '0112345678',
     TRUE
 ),
 (
     'dentist.amara',
-    'LOGIN_NOT_CONFIGURED',
+    '120000:okAJM+aAeVNJy+wFmlxHDw==:0eDIUUDPcVDUitEVkctRdDJhg+27liZaN/2x6Qvj6m4=',
     'Dr. Amara Silva',
     'DENTIST',
     'amara@sunrisedental.lk',
-    '0812000002',
+    '0771234567',
     TRUE
 ),
 (
     'dentist.kasun',
-    'LOGIN_NOT_CONFIGURED',
+    '120000:Gsw8QAYnnhDUwsXqZ8G4zQ==:iEFyMsSJZDamCoihMNztzxEN3OqvJlRKfcqOfhGuVs4=',
     'Dr. Kasun Perera',
     'DENTIST',
     'kasun@sunrisedental.lk',
-    '0812000003',
+    '0777654321',
     TRUE
 );
 
 
 -- ============================================================
 -- DEFAULT TREATMENT CHARGES
--- INSERT IGNORE prevents duplicate records
+-- INSERT IGNORE prevents duplicate records.
 -- ============================================================
 
 INSERT IGNORE INTO treatment_charges (
+
     treatment_code,
     treatment_name,
     description,
     standard_charge
+
 )
 VALUES
 (
@@ -412,7 +611,7 @@ VALUES
 
 
 -- ============================================================
--- DISPLAY CONFIRMATION INFORMATION
+-- VERIFICATION QUERIES
 -- ============================================================
 
 SELECT
