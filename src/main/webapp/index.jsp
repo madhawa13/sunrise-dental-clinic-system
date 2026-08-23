@@ -1,35 +1,37 @@
 <%@ page language="java"
-         contentType="text/html; charset=UTF-8"
-         pageEncoding="UTF-8" %>
+    contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8" %>
 
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
 
     <meta name="viewport"
-          content="width=device-width, initial-scale=1.0">
+        content="width=device-width, initial-scale=1.0">
 
-    <title>Sunrise Dental Clinic System</title>
+    <title>
+        Sunrise Dental Clinic System
+    </title>
 
     <link rel="stylesheet"
-          href="${pageContext.request.contextPath}/assets/css/style.css">
+        href="${pageContext.request.contextPath}/assets/css/style.css">
 </head>
 
 <body>
 
 <header class="main-header">
     <div class="container">
-
         <h1>Sunrise Dental Clinic</h1>
 
-        <p>Appointment and Patient Management System</p>
+        <p>
+            Appointment and Patient Management System
+        </p>
 
         <nav class="main-nav">
 
-            <a href="${pageContext.request.contextPath}/"
-               class="active">
+            <a class="active"
+                href="${pageContext.request.contextPath}/">
                 Dashboard
             </a>
 
@@ -45,15 +47,17 @@
                 Treatments
             </a>
 
-        </nav>
+            <a href="${pageContext.request.contextPath}/bills">
+                Billing
+            </a>
 
+        </nav>
     </div>
 </header>
 
 <main class="container">
 
     <section class="page-header">
-
         <div>
             <h2>System Dashboard</h2>
 
@@ -62,12 +66,9 @@
                 management system.
             </p>
         </div>
-
     </section>
 
     <section class="dashboard-grid">
-
-        <!-- Patient Management -->
 
         <article class="card dashboard-card">
 
@@ -85,24 +86,17 @@
             <div class="dashboard-actions">
 
                 <a class="btn btn-primary"
-                   href="${pageContext.request.contextPath}/patients">
-
+                    href="${pageContext.request.contextPath}/patients">
                     Manage Patients
-
                 </a>
 
                 <a class="btn btn-secondary"
-                   href="${pageContext.request.contextPath}/patients?action=new">
-
+                    href="${pageContext.request.contextPath}/patients?action=new">
                     Register Patient
-
                 </a>
 
             </div>
-
         </article>
-
-        <!-- Appointment Management -->
 
         <article class="card dashboard-card">
 
@@ -120,24 +114,17 @@
             <div class="dashboard-actions">
 
                 <a class="btn btn-primary"
-                   href="${pageContext.request.contextPath}/appointments">
-
+                    href="${pageContext.request.contextPath}/appointments">
                     Manage Appointments
-
                 </a>
 
                 <a class="btn btn-secondary"
-                   href="${pageContext.request.contextPath}/appointments?action=new">
-
+                    href="${pageContext.request.contextPath}/appointments?action=new">
                     Schedule Appointment
-
                 </a>
 
             </div>
-
         </article>
-
-        <!-- Treatment Management -->
 
         <article class="card dashboard-card">
 
@@ -156,24 +143,17 @@
             <div class="dashboard-actions">
 
                 <a class="btn btn-primary"
-                   href="${pageContext.request.contextPath}/treatments">
-
+                    href="${pageContext.request.contextPath}/treatments">
                     Manage Treatments
-
                 </a>
 
                 <a class="btn btn-secondary"
-                   href="${pageContext.request.contextPath}/treatments?action=new">
-
+                    href="${pageContext.request.contextPath}/treatments?action=new">
                     Add Treatment
-
                 </a>
 
             </div>
-
         </article>
-
-        <!-- Billing Management -->
 
         <article class="card dashboard-card">
 
@@ -184,22 +164,23 @@
             <h3>Billing and Payments</h3>
 
             <p>
-                Calculate treatment charges, prepare bills
-                and record payments received from patients.
+                Calculate treatment charges, apply discounts,
+                create printable bills and record payments.
             </p>
 
             <div class="dashboard-actions">
 
-                <button class="btn btn-disabled"
-                        type="button"
-                        disabled>
+                <a class="btn btn-primary"
+                    href="${pageContext.request.contextPath}/bills">
+                    Manage Bills
+                </a>
 
-                    Coming Soon
-
-                </button>
+                <a class="btn btn-secondary"
+                    href="${pageContext.request.contextPath}/bills?action=new">
+                    Create Bill
+                </a>
 
             </div>
-
         </article>
 
     </section>
@@ -217,12 +198,18 @@
 
             <div>
                 <strong>Application</strong>
-                <span>Sunrise Dental Clinic System</span>
+
+                <span>
+                    Sunrise Dental Clinic System
+                </span>
             </div>
 
             <div>
                 <strong>Technology</strong>
-                <span>Java, JSP, Servlets, JDBC and MySQL</span>
+
+                <span>
+                    Java, JSP, Servlets, JDBC and MySQL
+                </span>
             </div>
 
             <div>
@@ -232,19 +219,28 @@
 
             <div>
                 <strong>Testing</strong>
-                <span>JUnit 5, Mockito, H2 and TDD</span>
-            </div>
 
-            <div>
-                <strong>Completed Modules</strong>
                 <span>
-                    Patients, Appointments and Treatments
+                    JUnit 5, Mockito, H2 and TDD
                 </span>
             </div>
 
             <div>
-                <strong>Current Development</strong>
-                <span>Billing and Payments</span>
+                <strong>Completed Modules</strong>
+
+                <span>
+                    Patients, Appointments, Treatments,
+                    Billing and Payments
+                </span>
+            </div>
+
+            <div>
+                <strong>CI Build</strong>
+
+                <span>
+                    GitHub Actions with automated
+                    tests and WAR packaging
+                </span>
             </div>
 
             <div>
@@ -256,19 +252,16 @@
             </div>
 
         </div>
-
     </section>
 
 </main>
 
 <footer class="main-footer">
     <div class="container">
-
         <p>
             &copy; 2026 Sunrise Dental Clinic.
             CIS6003 Advanced Programming Assignment.
         </p>
-
     </div>
 </footer>
 

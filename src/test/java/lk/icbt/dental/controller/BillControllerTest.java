@@ -15,8 +15,10 @@ import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
+import lk.icbt.dental.model.Appointment;
 import lk.icbt.dental.model.Bill;
 import lk.icbt.dental.model.Payment;
+import lk.icbt.dental.service.AppointmentService;
 import lk.icbt.dental.service.BillService;
 import lk.icbt.dental.service.PaymentService;
 
@@ -27,6 +29,10 @@ class BillControllerTest {
 
     private BillService billService;
     private PaymentService paymentService;
+
+    private AppointmentService
+            appointmentService;
+
     private BillController controller;
 
     private HttpServletRequest request;
@@ -42,6 +48,9 @@ class BillControllerTest {
         paymentService =
                 mock(PaymentService.class);
 
+        appointmentService =
+                mock(AppointmentService.class);
+
         request =
                 mock(HttpServletRequest.class);
 
@@ -54,7 +63,8 @@ class BillControllerTest {
         controller =
                 new BillController(
                         billService,
-                        paymentService);
+                        paymentService,
+                        appointmentService);
     }
 
     @Test
@@ -93,16 +103,41 @@ class BillControllerTest {
 
     @Test
     @DisplayName(
-            "Should display bill creation form")
-    void shouldDisplayBillCreationForm()
+            "Should display appointment numbers in bill form")
+    void shouldDisplayAppointmentNumbersInBillForm()
             throws Exception {
+
+        Appointment firstAppointment =
+                new Appointment();
+
+        firstAppointment.setAppointmentId(4L);
+
+        firstAppointment.setAppointmentNumber(
+                "APT-1787386858160");
+
+        Appointment secondAppointment =
+                new Appointment();
+
+        secondAppointment.setAppointmentId(5L);
+
+        secondAppointment.setAppointmentNumber(
+                "APT-1787481461934");
+
+        List<Appointment> appointments =
+                List.of(
+                        firstAppointment,
+                        secondAppointment);
 
         when(request.getParameter("action"))
                 .thenReturn("new");
 
         when(request.getParameter(
                 "appointmentId"))
-                .thenReturn("50");
+                .thenReturn("4");
+
+        when(appointmentService
+                .getAllAppointments())
+                .thenReturn(appointments);
 
         when(request.getRequestDispatcher(
                 "/WEB-INF/views/bill/form.jsp"))
@@ -113,8 +148,12 @@ class BillControllerTest {
                 response);
 
         verify(request).setAttribute(
-                "appointmentId",
-                "50");
+                "appointments",
+                appointments);
+
+        verify(request).setAttribute(
+                "selectedAppointmentId",
+                "4");
 
         verify(dispatcher).forward(
                 request,
@@ -186,8 +225,8 @@ class BillControllerTest {
 
     @Test
     @DisplayName(
-            "Should create bill and redirect to bill view")
-    void shouldCreateBillAndRedirectToBillView()
+            "Should create bill using selected appointment")
+    void shouldCreateBillUsingSelectedAppointment()
             throws Exception {
 
         Bill createdBill = new Bill();
@@ -199,7 +238,7 @@ class BillControllerTest {
 
         when(request.getParameter(
                 "appointmentId"))
-                .thenReturn("50");
+                .thenReturn("4");
 
         when(request.getParameter("discount"))
                 .thenReturn("500.00");
@@ -209,7 +248,7 @@ class BillControllerTest {
                         "/sunrise-dental-clinic-system");
 
         when(billService.createBill(
-                50L,
+                4L,
                 new BigDecimal("500.00")))
                 .thenReturn(createdBill);
 
@@ -218,7 +257,7 @@ class BillControllerTest {
                 response);
 
         verify(billService).createBill(
-                50L,
+                4L,
                 new BigDecimal("500.00"));
 
         verify(response).sendRedirect(

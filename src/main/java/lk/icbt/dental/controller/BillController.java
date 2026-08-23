@@ -12,8 +12,11 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
+import lk.icbt.dental.model.Appointment;
 import lk.icbt.dental.model.Bill;
 import lk.icbt.dental.model.Payment;
+import lk.icbt.dental.service.AppointmentService;
+import lk.icbt.dental.service.AppointmentServiceImpl;
 import lk.icbt.dental.service.BillService;
 import lk.icbt.dental.service.BillServiceImpl;
 import lk.icbt.dental.service.PaymentService;
@@ -45,6 +48,8 @@ public class BillController
 
     private final BillService billService;
     private final PaymentService paymentService;
+    private final AppointmentService
+            appointmentService;
 
     /**
      * Constructor used by Tomcat.
@@ -52,7 +57,8 @@ public class BillController
     public BillController() {
         this(
                 new BillServiceImpl(),
-                new PaymentServiceImpl());
+                new PaymentServiceImpl(),
+                new AppointmentServiceImpl());
     }
 
     /**
@@ -60,10 +66,12 @@ public class BillController
      */
     BillController(
             BillService billService,
-            PaymentService paymentService) {
+            PaymentService paymentService,
+            AppointmentService appointmentService) {
 
         if (billService == null
-                || paymentService == null) {
+                || paymentService == null
+                || appointmentService == null) {
 
             throw new IllegalArgumentException(
                     "Billing controller services "
@@ -71,9 +79,11 @@ public class BillController
         }
 
         this.billService = billService;
-
         this.paymentService =
                 paymentService;
+
+        this.appointmentService =
+                appointmentService;
     }
 
     /**
@@ -215,7 +225,10 @@ public class BillController
     }
 
     /**
-     * Displays the bill creation form.
+     * Displays the bill form with appointment numbers.
+     *
+     * The browser displays each unique appointment
+     * number while submitting the internal appointment ID.
      */
     private void displayBillForm(
             HttpServletRequest request,
@@ -224,13 +237,18 @@ public class BillController
             ServletException,
             IOException {
 
-        String appointmentId =
-                request.getParameter(
-                        "appointmentId");
+        List<Appointment> appointments =
+                appointmentService
+                        .getAllAppointments();
 
         request.setAttribute(
-                "appointmentId",
-                appointmentId);
+                "appointments",
+                appointments);
+
+        request.setAttribute(
+                "selectedAppointmentId",
+                request.getParameter(
+                        "appointmentId"));
 
         forward(
                 request,
@@ -299,7 +317,8 @@ public class BillController
     }
 
     /**
-     * Creates a bill for an appointment.
+     * Creates a bill for the appointment
+     * selected using its appointment number.
      */
     private void createBill(
             HttpServletRequest request,
@@ -311,7 +330,7 @@ public class BillController
                 parsePositiveId(
                         request.getParameter(
                                 "appointmentId"),
-                        "Appointment ID");
+                        "Appointment");
 
         BigDecimal discount =
                 parseMoney(
@@ -430,7 +449,7 @@ public class BillController
     }
 
     /**
-     * Displays the common error page.
+     * Displays the shared error page.
      */
     private void displayError(
             HttpServletRequest request,
@@ -450,7 +469,7 @@ public class BillController
     }
 
     /**
-     * Forwards the request to a JSP page.
+     * Forwards a request to a JSP page.
      */
     private void forward(
             HttpServletRequest request,
