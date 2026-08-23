@@ -1119,4 +1119,344 @@ main.container {
     .main-navigation a {
         padding: 12px 14px;
     }
+}/* ==========================================================
+   17. AUTHENTICATION AND LOGIN PAGE
+   ========================================================== */
+
+.login-page {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    margin: 0;
+    color: #1f2937;
+    background:
+        linear-gradient(
+            135deg,
+            rgba(0, 109, 119, 0.95),
+            rgba(2, 132, 199, 0.92));
+}
+
+.login-container {
+    display: flex;
+    flex: 1;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    padding: 40px 20px;
+}
+
+.login-card {
+    width: 100%;
+    max-width: 460px;
+    padding: 38px;
+    border: 1px solid
+        rgba(255, 255, 255, 0.35);
+    border-radius: 18px;
+    background-color: #ffffff;
+    box-shadow:
+        0 20px 45px
+        rgba(15, 23, 42, 0.25);
+}
+
+.login-brand {
+    margin-bottom: 28px;
+    text-align: center;
+}
+
+.login-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 70px;
+    height: 70px;
+    margin: 0 auto 17px;
+    color: #ffffff;
+    background:
+        linear-gradient(
+            135deg,
+            #006d77,
+            #0284c7);
+    border-radius: 18px;
+    font-size: 35px;
+    box-shadow:
+        0 8px 18px
+        rgba(2, 132, 199, 0.25);
+}
+
+.login-brand h1 {
+    margin: 0 0 7px;
+    color: #0f172a;
+    font-size: 27px;
+}
+
+.login-brand p {
+    margin: 0;
+    color: #64748b;
+    font-size: 14px;
+}
+
+.login-heading {
+    margin-bottom: 23px;
+}
+
+.login-heading h2 {
+    margin: 0 0 6px;
+    color: #0f172a;
+    font-size: 23px;
+}
+
+.login-heading p {
+    margin: 0;
+    color: #64748b;
+    font-size: 14px;
+}
+
+.login-form {
+    display: flex;
+    flex-direction: column;
+    gap: 19px;
+}
+
+.login-button {
+    width: 100%;
+    min-height: 47px;
+    margin-top: 3px;
+    font-size: 15px;
+}
+
+.login-information {
+    margin-top: 24px;
+    padding: 15px;
+    color: #475569;
+    background-color: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 9px;
+    text-align: center;
+}
+
+.login-information p {
+    margin: 0;
+    font-size: 12px;
+    line-height: 1.6;
+}
+
+.login-information p + p {
+    margin-top: 5px;
+}
+
+.login-footer {
+    padding: 18px 20px;
+    color: #e0f2fe;
+    text-align: center;
+    background-color:
+        rgba(15, 23, 42, 0.28);
+}
+
+.login-footer p {
+    margin: 0;
+    font-size: 13px;
+}
+
+@media (max-width: 520px) {
+
+    .login-container {
+        padding: 25px 14px;
+    }
+
+    .login-card {
+        padding: 27px 21px;
+        border-radius: 14px;
+    }
+
+    .login-brand h1 {
+        font-size: 23px;
+    }
+
+    .login-heading h2 {
+        font-size: 21px;
+    }
+}/* ==========================================================
+   18. AUTHENTICATED USER PANEL
+   ========================================================== */
+
+.header-top {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 25px;
+}
+
+.user-panel {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 10px 13px;
+    background-color:
+        rgba(255, 255, 255, 0.14);
+    border: 1px solid
+        rgba(255, 255, 255, 0.25);
+    border-radius: 10px;
+}
+
+.user-information {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 3px;
+}
+
+.user-welcome {
+    color: #ffffff;
+    font-size: 13px;
+}
+
+.user-role {
+    display: inline-block;
+    padding: 4px 9px;
+    color: #0f4c5c;
+    background-color: #e0f2fe;
+    border-radius: 20px;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+}
+
+.logout-form {
+    display: inline-block;
+    margin: 0;
+}
+
+.logout-button {
+    min-height: 35px;
+    padding: 8px 13px;
+    color: #ffffff;
+    background-color:
+        rgba(220, 38, 38, 0.92);
+    border: 1px solid
+        rgba(255, 255, 255, 0.3);
+    font-size: 12px;
+}
+
+.logout-button:hover {
+    color: #ffffff;
+    background-color: #b91c1c;
+}
+
+@media (max-width: 768px) {
+
+    .header-top {
+        flex-direction: column;
+        gap: 17px;
+    }
+
+    .user-panel {
+        width: 100%;
+        justify-content: space-between;
+        margin-bottom: 5px;
+    }
+
+    .user-information {
+        align-items: flex-start;
+    }
+}
+
+@media (max-width: 480px) {
+
+    .user-panel {
+        align-items: stretch;
+        flex-direction: column;
+    }
+
+    .logout-button {
+        width: 100%;
+    }
+}/* ==========================================================
+   19. HELP AND USER GUIDANCE
+   ========================================================== */
+
+.help-grid {
+    display: grid;
+    grid-template-columns:
+        repeat(2, minmax(0, 1fr));
+    gap: 22px;
+    margin-bottom: 25px;
+}
+
+.help-card {
+    position: relative;
+    min-height: 285px;
+    margin-bottom: 0;
+    padding-top: 65px;
+}
+
+.help-number {
+    position: absolute;
+    top: 20px;
+    left: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 35px;
+    height: 35px;
+    color: #ffffff;
+    background:
+        linear-gradient(
+            135deg,
+            #006d77,
+            #0284c7);
+    border-radius: 50%;
+    font-size: 15px;
+    font-weight: 700;
+}
+
+.help-card h3 {
+    margin: 0 0 16px;
+    color: #0f172a;
+    font-size: 20px;
+}
+
+.help-list {
+    margin: 0;
+    padding-left: 22px;
+    color: #475569;
+}
+
+.help-list li {
+    margin-bottom: 11px;
+    padding-left: 4px;
+    line-height: 1.6;
+}
+
+.help-list li:last-child {
+    margin-bottom: 0;
+}
+
+.help-list li::marker {
+    color: #0284c7;
+}
+
+.help-contact {
+    border-left: 5px solid #0284c7;
+}
+
+.help-contact h3 {
+    margin-bottom: 9px;
+    color: #0f172a;
+}
+
+.help-contact > p {
+    margin-bottom: 20px;
+    color: #64748b;
+}
+
+@media (max-width: 800px) {
+
+    .help-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .help-card {
+        min-height: auto;
+    }
 }
