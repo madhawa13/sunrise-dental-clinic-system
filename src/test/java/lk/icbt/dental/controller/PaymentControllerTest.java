@@ -15,6 +15,7 @@ import org.mockito.ArgumentCaptor;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
 import lk.icbt.dental.model.Bill;
 import lk.icbt.dental.model.Payment;
@@ -33,6 +34,7 @@ class PaymentControllerTest {
     private HttpServletRequest request;
     private HttpServletResponse response;
     private RequestDispatcher dispatcher;
+    private HttpSession session;
 
     @BeforeEach
     void setUp() {
@@ -51,6 +53,9 @@ class PaymentControllerTest {
 
         dispatcher =
                 mock(RequestDispatcher.class);
+
+        session =
+                mock(HttpSession.class);
 
         controller =
                 new PaymentController(
@@ -75,8 +80,7 @@ class PaymentControllerTest {
         when(billService.getBillById(10L))
                 .thenReturn(bill);
 
-        when(paymentService
-                .calculateTotalPaid(10L))
+        when(paymentService.calculateTotalPaid(10L))
                 .thenReturn(
                         new BigDecimal("2000.00"));
 
@@ -107,7 +111,8 @@ class PaymentControllerTest {
 
     @Test
     @DisplayName(
-            "Should record payment and redirect to bill")
+            "Should record payment using logged-in user "
+            + "and redirect to bill")
     void shouldRecordPaymentAndRedirectToBill()
             throws Exception {
 
@@ -124,9 +129,16 @@ class PaymentControllerTest {
                 "paymentMethod"))
                 .thenReturn("CASH");
 
-        when(request.getParameter(
-                "receivedBy"))
-                .thenReturn("1");
+        /*
+         * Simulates the user who logged in.
+         * Received-by ID must come from this session,
+         * not from a manually entered form value.
+         */
+        when(request.getSession(false))
+                .thenReturn(session);
+
+        when(session.getAttribute("userId"))
+                .thenReturn(Long.valueOf(1L));
 
         when(request.getParameter(
                 "referenceNumber"))
@@ -168,10 +180,23 @@ class PaymentControllerTest {
                 capturedPayment
                         .getPaymentMethod());
 
+        /*
+         * Confirms that the logged-in user's ID
+         * was automatically assigned.
+         */
         assertEquals(
                 Long.valueOf(1L),
                 capturedPayment
                         .getReceivedBy());
+
+        assertEquals(
+                "CASH-REF-001",
+                capturedPayment
+                        .getReferenceNumber());
+
+        assertEquals(
+                "Patient cash payment",
+                capturedPayment.getNotes());
 
         verify(response).sendRedirect(
                 "/sunrise-dental-clinic-system"
@@ -212,6 +237,9 @@ class PaymentControllerTest {
                 + "&success=paymentDeleted");
     }
 
+    /**
+     * Creates bill information used by tests.
+     */
     private Bill createBill() {
 
         Bill bill = new Bill();

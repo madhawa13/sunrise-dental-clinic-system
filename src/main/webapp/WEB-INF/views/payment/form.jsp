@@ -198,17 +198,21 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="receivedBy">
-                        Received-by User ID
-                        <span class="required">*</span>
-                    </label>
+                    <div class="form-group">
 
-                    <input type="number"
-                        id="receivedBy"
-                        name="receivedBy"
-                        min="1"
-                        required>
+    <label>
+        Payment Received By
+    </label>
 
+    <input type="text"
+           value="${sessionScope.username} (${sessionScope.userRole})"
+           readonly>
+
+    <small class="form-help">
+        The logged-in staff user is assigned automatically.
+    </small>
+
+</div>
                     <small>
                         Enter the receptionist user ID.
                         Login integration will later supply

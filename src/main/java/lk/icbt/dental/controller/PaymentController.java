@@ -10,6 +10,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
 import lk.icbt.dental.model.Bill;
 import lk.icbt.dental.model.Payment;
@@ -47,6 +48,9 @@ public class PaymentController
 
     /**
      * Constructor used by Mockito tests.
+     *
+     * @param paymentService payment business service
+     * @param billService bill business service
      */
     PaymentController(
             PaymentService paymentService,
@@ -145,6 +149,7 @@ public class PaymentController
                     exception.getMessage());
 
             if ("record".equals(action)) {
+
                 try {
                     displayPaymentForm(
                             request,
@@ -242,16 +247,22 @@ public class PaymentController
                         request.getParameter(
                                 "amount"));
 
+        /*
+         * The payment receiver is obtained from the
+         * authenticated HTTP session. The form user
+         * cannot manually select or change this ID.
+         */
         long receivedBy =
-                parsePositiveId(
-                        request.getParameter(
-                                "receivedBy"),
-                        "Received-by user ID");
+                getLoggedInUserId(request);
 
-        Payment payment = new Payment();
+        Payment payment =
+                new Payment();
 
-        payment.setBillId(billId);
-        payment.setAmount(amount);
+        payment.setBillId(
+                billId);
+
+        payment.setAmount(
+                amount);
 
         payment.setPaymentMethod(
                 request.getParameter(
@@ -276,6 +287,54 @@ public class PaymentController
                         + "/bills?action=view&id="
                         + billId
                         + "&success=payment");
+    }
+
+    /**
+     * Returns the database ID of the authenticated user.
+     *
+     * The login controller stores the user ID in the
+     * HTTP session after successful authentication.
+     *
+     * @param request current HTTP request
+     * @return authenticated user database ID
+     */
+    private long getLoggedInUserId(
+            HttpServletRequest request) {
+
+        HttpSession session =
+                request.getSession(false);
+
+        if (session == null) {
+
+            throw new IllegalArgumentException(
+                    "You must be logged in "
+                    + "to record a payment");
+        }
+
+        Object loggedInUserId =
+                session.getAttribute(
+                        "userId");
+
+        if (!(loggedInUserId
+                instanceof Number)) {
+
+            throw new IllegalArgumentException(
+                    "Logged-in user ID "
+                    + "was not found");
+        }
+
+        long userId =
+                ((Number) loggedInUserId)
+                        .longValue();
+
+        if (userId <= 0) {
+
+            throw new IllegalArgumentException(
+                    "Logged-in user ID "
+                    + "is invalid");
+        }
+
+        return userId;
     }
 
     /**
@@ -311,6 +370,10 @@ public class PaymentController
 
     /**
      * Parses a positive database ID.
+     *
+     * @param value ID text value
+     * @param fieldName field description
+     * @return positive database ID
      */
     private long parsePositiveId(
             String value,
@@ -344,6 +407,9 @@ public class PaymentController
 
     /**
      * Parses a positive payment amount.
+     *
+     * @param amountValue submitted payment amount
+     * @return positive payment amount
      */
     private BigDecimal parseAmount(
             String amountValue) {
