@@ -1,9 +1,9 @@
 <%@ page language="java"
-    contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8" %>
+         contentType="text/html; charset=UTF-8"
+         pageEncoding="UTF-8" %>
 
 <%@ taglib prefix="c"
-    uri="jakarta.tags.core" %>
+           uri="jakarta.tags.core" %>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -12,13 +12,12 @@
     <meta charset="UTF-8">
 
     <meta name="viewport"
-        content="width=device-width, initial-scale=1.0">
+          content="width=device-width, initial-scale=1.0">
 
     <c:choose>
-
         <c:when test="${not empty patient.patientId}">
             <title>
-                Update Patient | Sunrise Dental Clinic
+                Edit Patient | Sunrise Dental Clinic
             </title>
         </c:when>
 
@@ -27,488 +26,443 @@
                 Register Patient | Sunrise Dental Clinic
             </title>
         </c:otherwise>
-
     </c:choose>
 
     <link rel="stylesheet"
-        href="${pageContext.request.contextPath}/assets/css/style.css">
+          href="${pageContext.request.contextPath}/assets/css/style.css">
 </head>
 
 <body>
 
-    <!-- Navigation Bar -->
-    <header class="navbar">
+<header class="main-header">
 
-        <div class="navbar-container">
+    <div class="container">
 
-            <a class="brand"
-                href="${pageContext.request.contextPath}/">
-
-                <span class="brand-icon">
-                    🦷
-                </span>
-
-                <span class="brand-text">
-
-                    <span class="brand-title">
-                        Sunrise Dental Clinic
-                    </span>
-
-                    <span class="brand-subtitle">
-                        Appointment and Patient Management
-                    </span>
-
-                </span>
-            </a>
-
-            <nav class="nav-links">
-
-                <a class="nav-link"
-                    href="${pageContext.request.contextPath}/">
-                    Dashboard
-                </a>
-
-                <a class="nav-link active"
-                    href="${pageContext.request.contextPath}/patients">
-                    Patients
-                </a>
-
-                <a class="nav-link"
-                    href="#">
-                    Appointments
-                </a>
-
-                <a class="nav-link"
-                    href="#">
-                    Treatments
-                </a>
-
-                <a class="nav-link"
-                    href="#">
-                    Billing
-                </a>
-
-            </nav>
-
-        </div>
-
-    </header>
-
-
-    <!-- Main Page -->
-    <main class="page-container">
-
-        <section class="page-header">
+        <div class="header-top">
 
             <div>
+                <h1>Sunrise Dental Clinic</h1>
 
-                <c:choose>
-
-                    <c:when test="${not empty patient.patientId}">
-
-                        <h1 class="page-title">
-                            Update Patient
-                        </h1>
-
-                        <p class="page-description">
-                            Edit the selected patient's
-                            personal and medical information.
-                        </p>
-
-                    </c:when>
-
-                    <c:otherwise>
-
-                        <h1 class="page-title">
-                            Register New Patient
-                        </h1>
-
-                        <p class="page-description">
-                            Enter the patient's personal,
-                            contact and medical information.
-                        </p>
-
-                    </c:otherwise>
-
-                </c:choose>
-
+                <p>
+                    Appointment and Patient Management System
+                </p>
             </div>
 
-            <a class="btn btn-outline"
-                href="${pageContext.request.contextPath}/patients">
+            <div class="user-panel">
 
-                Back to Patient List
+                <div class="user-information">
 
-            </a>
+                    <span class="user-welcome">
+                        Welcome,
+                        <strong>
+                            <c:out value="${sessionScope.username}"/>
+                        </strong>
+                    </span>
 
-        </section>
+                    <span class="user-role">
+                        <c:out value="${sessionScope.userRole}"/>
+                    </span>
 
-
-        <!-- Validation Error -->
-        <c:if test="${not empty errorMessage}">
-
-            <div class="alert alert-error">
-
-                <c:out value="${errorMessage}" />
-
-            </div>
-
-        </c:if>
-
-
-        <!-- Patient Form -->
-        <section class="card">
-
-            <div class="card-header">
-
-                <h2 class="card-title">
-
-                    <c:choose>
-
-                        <c:when test="${not empty patient.patientId}">
-                            Patient Information
-                        </c:when>
-
-                        <c:otherwise>
-                            New Patient Information
-                        </c:otherwise>
-
-                    </c:choose>
-
-                </h2>
-
-            </div>
-
-
-            <div class="card-body">
+                </div>
 
                 <form method="post"
-                    action="${pageContext.request.contextPath}/patients">
-
-                    <c:choose>
-
-                        <c:when test="${not empty patient.patientId}">
-
-                            <input type="hidden"
-                                name="action"
-                                value="update">
-
-                            <input type="hidden"
-                                name="patientId"
-                                value="${patient.patientId}">
-
-                            <input type="hidden"
-                                name="patientNumber"
-                                value="<c:out value='${patient.patientNumber}' />">
-
-                        </c:when>
-
-                        <c:otherwise>
-
-                            <input type="hidden"
-                                name="action"
-                                value="register">
-
-                        </c:otherwise>
-
-                    </c:choose>
-
-
-                    <div class="form-grid">
-
-                        <!-- Patient Number -->
-                        <c:if test="${not empty patient.patientId}">
-
-                            <div class="form-group form-group-full">
-
-                                <label class="form-label">
-                                    Patient Number
-                                </label>
-
-                                <input class="form-control"
-                                    type="text"
-                                    value="<c:out value='${patient.patientNumber}' />"
-                                    readonly>
-
-                                <span class="form-help">
-                                    The patient number is generated
-                                    automatically and cannot be changed.
-                                </span>
-
-                            </div>
-
-                        </c:if>
-
-
-                        <!-- First Name -->
-                        <div class="form-group">
-
-                            <label class="form-label"
-                                for="firstName">
-
-                                First Name
-                                <span class="required">*</span>
-
-                            </label>
-
-                            <input class="form-control"
-                                id="firstName"
-                                type="text"
-                                name="firstName"
-                                value="<c:out value='${patient.firstName}' />"
-                                maxlength="50"
-                                autocomplete="given-name"
-                                required>
-
-                        </div>
-
-
-                        <!-- Last Name -->
-                        <div class="form-group">
-
-                            <label class="form-label"
-                                for="lastName">
-
-                                Last Name
-                                <span class="required">*</span>
-
-                            </label>
-
-                            <input class="form-control"
-                                id="lastName"
-                                type="text"
-                                name="lastName"
-                                value="<c:out value='${patient.lastName}' />"
-                                maxlength="50"
-                                autocomplete="family-name"
-                                required>
-
-                        </div>
-
-
-                        <!-- Date of Birth -->
-                        <div class="form-group">
-
-                            <label class="form-label"
-                                for="dateOfBirth">
-
-                                Date of Birth
-                                <span class="required">*</span>
-
-                            </label>
-
-                            <input class="form-control"
-                                id="dateOfBirth"
-                                type="date"
-                                name="dateOfBirth"
-                                value="${patient.dateOfBirth}"
-                                required>
-
-                        </div>
-
-
-                        <!-- Gender -->
-                        <div class="form-group">
-
-                            <label class="form-label"
-                                for="gender">
-
-                                Gender
-                                <span class="required">*</span>
-
-                            </label>
-
-                            <select class="form-control"
-                                id="gender"
-                                name="gender"
-                                required>
-
-                                <option value="">
-                                    Select gender
-                                </option>
-
-                                <option value="MALE"
-                                    ${patient.gender == 'MALE'
-                                        ? 'selected' : ''}>
-                                    Male
-                                </option>
-
-                                <option value="FEMALE"
-                                    ${patient.gender == 'FEMALE'
-                                        ? 'selected' : ''}>
-                                    Female
-                                </option>
-
-                                <option value="OTHER"
-                                    ${patient.gender == 'OTHER'
-                                        ? 'selected' : ''}>
-                                    Other
-                                </option>
-
-                            </select>
-
-                        </div>
-
-
-                        <!-- NIC Number -->
-                        <div class="form-group">
-
-                            <label class="form-label"
-                                for="nicNumber">
-
-                                NIC Number
-
-                            </label>
-
-                            <input class="form-control"
-                                id="nicNumber"
-                                type="text"
-                                name="nicNumber"
-                                value="<c:out value='${patient.nicNumber}' />"
-                                maxlength="20"
-                                placeholder="Example: 901234567V">
-
-                        </div>
-
-
-                        <!-- Phone -->
-                        <div class="form-group">
-
-                            <label class="form-label"
-                                for="phone">
-
-                                Phone Number
-                                <span class="required">*</span>
-
-                            </label>
-
-                            <input class="form-control"
-                                id="phone"
-                                type="tel"
-                                name="phone"
-                                value="<c:out value='${patient.phone}' />"
-                                maxlength="15"
-                                autocomplete="tel"
-                                placeholder="Example: 0771234567"
-                                required>
-
-                        </div>
-
-
-                        <!-- Email -->
-                        <div class="form-group form-group-full">
-
-                            <label class="form-label"
-                                for="email">
-
-                                Email Address
-
-                            </label>
-
-                            <input class="form-control"
-                                id="email"
-                                type="email"
-                                name="email"
-                                value="<c:out value='${patient.email}' />"
-                                maxlength="100"
-                                autocomplete="email"
-                                placeholder="Example: patient@example.com">
-
-                        </div>
-
-
-                        <!-- Address -->
-                        <div class="form-group form-group-full">
-
-                            <label class="form-label"
-                                for="address">
-
-                                Residential Address
-
-                            </label>
-
-                            <textarea class="form-control"
-                                id="address"
-                                name="address"
-                                maxlength="255"
-                                autocomplete="street-address"
-                                placeholder="Enter the patient's address"><c:out value="${patient.address}" /></textarea>
-
-                        </div>
-
-
-                        <!-- Medical Notes -->
-                        <div class="form-group form-group-full">
-
-                            <label class="form-label"
-                                for="medicalNotes">
-
-                                Medical Notes
-
-                            </label>
-
-                            <textarea class="form-control"
-                                id="medicalNotes"
-                                name="medicalNotes"
-                                placeholder="Enter allergies, health conditions or other important notes"><c:out value="${patient.medicalNotes}" /></textarea>
-
-                            <span class="form-help">
-                                Record allergies and medical conditions
-                                that may affect dental treatment.
-                            </span>
-
-                        </div>
-
-                    </div>
-
-
-                    <!-- Form Buttons -->
-                    <div class="form-actions">
-
-                        <a class="btn btn-outline"
-                            href="${pageContext.request.contextPath}/patients">
-
-                            Cancel
-
-                        </a>
-
-                        <button class="btn btn-primary"
-                            type="submit">
-
-                            <c:choose>
-
-                                <c:when test="${not empty patient.patientId}">
-                                    Update Patient
-                                </c:when>
-
-                                <c:otherwise>
-                                    Register Patient
-                                </c:otherwise>
-
-                            </c:choose>
-
-                        </button>
-
-                    </div>
+                      action="${pageContext.request.contextPath}/logout"
+                      class="logout-form">
+
+                    <button type="submit"
+                            class="btn logout-button">
+                        Logout
+                    </button>
 
                 </form>
 
             </div>
 
-        </section>
+        </div>
 
-    </main>
+        <nav class="main-nav">
 
+            <a href="${pageContext.request.contextPath}/">
+                Dashboard
+            </a>
 
-    <!-- Footer -->
-    <footer class="footer">
+            <a href="${pageContext.request.contextPath}/patients"
+               class="active">
+                Patients
+            </a>
 
-        Sunrise Dental Clinic
-        &copy; 2026 |
-        CIS6003 Advanced Programming Assignment
+            <a href="${pageContext.request.contextPath}/appointments">
+                Appointments
+            </a>
 
-    </footer>
+            <c:if test="${sessionScope.userRole == 'DENTIST'}">
+
+                <a href="${pageContext.request.contextPath}/treatments">
+                    Treatments
+                </a>
+
+            </c:if>
+
+            <c:if test="${sessionScope.userRole == 'RECEPTIONIST'}">
+
+                <a href="${pageContext.request.contextPath}/bills">
+                    Billing
+                </a>
+
+                <a href="${pageContext.request.contextPath}/reports">
+                    Reports
+                </a>
+
+            </c:if>
+
+            <a href="${pageContext.request.contextPath}/help">
+                Help
+            </a>
+
+        </nav>
+
+    </div>
+
+</header>
+
+<main class="container">
+
+    <section class="page-header">
+
+        <div>
+
+            <c:choose>
+                <c:when test="${not empty patient.patientId}">
+
+                    <h2>Edit Patient</h2>
+
+                    <p>
+                        Update the patient's personal, contact
+                        and medical information.
+                    </p>
+
+                </c:when>
+
+                <c:otherwise>
+
+                    <h2>Register New Patient</h2>
+
+                    <p>
+                        Enter the patient's personal, contact
+                        and medical information.
+                    </p>
+
+                </c:otherwise>
+            </c:choose>
+
+        </div>
+
+        <a class="btn btn-secondary"
+           href="${pageContext.request.contextPath}/patients">
+            Back to Patient List
+        </a>
+
+    </section>
+
+    <c:if test="${not empty errorMessage}">
+
+        <div class="alert alert-danger">
+            <c:out value="${errorMessage}"/>
+        </div>
+
+    </c:if>
+
+    <section class="card form-card">
+
+        <c:choose>
+            <c:when test="${not empty patient.patientId}">
+                <h3>Edit Patient Information</h3>
+            </c:when>
+
+            <c:otherwise>
+                <h3>New Patient Information</h3>
+            </c:otherwise>
+        </c:choose>
+
+        <form method="post"
+              action="${pageContext.request.contextPath}/patients">
+
+            <c:choose>
+                <c:when test="${not empty patient.patientId}">
+
+                    <input type="hidden"
+                           name="action"
+                           value="update">
+
+                    <input type="hidden"
+                           name="patientId"
+                           value="${patient.patientId}">
+
+                    <input type="hidden"
+                           name="patientNumber"
+                           value="<c:out value='${patient.patientNumber}'/>">
+
+                </c:when>
+
+                <c:otherwise>
+
+                    <input type="hidden"
+                           name="action"
+                           value="register">
+
+                </c:otherwise>
+            </c:choose>
+
+            <div class="form-grid">
+
+                <div class="form-group">
+
+                    <label for="firstName">
+                        First Name
+                        <span class="required">*</span>
+                    </label>
+
+                    <input type="text"
+                           id="firstName"
+                           name="firstName"
+                           maxlength="50"
+                           value="<c:out value='${patient.firstName}'/>"
+                           required>
+
+                </div>
+
+                <div class="form-group">
+
+                    <label for="lastName">
+                        Last Name
+                        <span class="required">*</span>
+                    </label>
+
+                    <input type="text"
+                           id="lastName"
+                           name="lastName"
+                           maxlength="50"
+                           value="<c:out value='${patient.lastName}'/>"
+                           required>
+
+                </div>
+
+                <div class="form-group">
+
+                    <label for="dateOfBirth">
+                        Date of Birth
+                        <span class="required">*</span>
+                    </label>
+
+                    <input type="date"
+                           id="dateOfBirth"
+                           name="dateOfBirth"
+                           value="${patient.dateOfBirth}"
+                           required>
+
+                </div>
+
+                <div class="form-group">
+
+                    <label for="gender">
+                        Gender
+                        <span class="required">*</span>
+                    </label>
+
+                    <select id="gender"
+                            name="gender"
+                            required>
+
+                        <option value="">
+                            Select gender
+                        </option>
+
+                        <option value="MALE"
+                            <c:if test="${patient.gender == 'MALE'}">
+                                selected
+                            </c:if>>
+                            Male
+                        </option>
+
+                        <option value="FEMALE"
+                            <c:if test="${patient.gender == 'FEMALE'}">
+                                selected
+                            </c:if>>
+                            Female
+                        </option>
+
+                        <option value="OTHER"
+                            <c:if test="${patient.gender == 'OTHER'}">
+                                selected
+                            </c:if>>
+                            Other
+                        </option>
+
+                    </select>
+
+                </div>
+
+                <div class="form-group">
+
+                    <label for="nicNumber">
+                        NIC Number
+                    </label>
+
+                    <input type="text"
+                           id="nicNumber"
+                           name="nicNumber"
+                           maxlength="20"
+                           value="<c:out value='${patient.nicNumber}'/>"
+                           placeholder="Example: 901234567V">
+
+                    <small class="form-help">
+                        Enter the patient's NIC number when available.
+                    </small>
+
+                </div>
+
+                <div class="form-group">
+
+                    <label for="phone">
+                        Phone Number
+                        <span class="required">*</span>
+                    </label>
+
+                    <input type="tel"
+                           id="phone"
+                           name="phone"
+                           maxlength="20"
+                           value="<c:out value='${patient.phone}'/>"
+                           placeholder="Example: 0771234567"
+                           required>
+
+                </div>
+
+                <div class="form-group form-group-full">
+
+                    <label for="email">
+                        Email Address
+                    </label>
+
+                    <input type="email"
+                           id="email"
+                           name="email"
+                           maxlength="100"
+                           value="<c:out value='${patient.email}'/>"
+                           placeholder="Example: patient@example.com">
+
+                </div>
+
+                <div class="form-group form-group-full">
+
+                    <label for="address">
+                        Residential Address
+                    </label>
+
+                    <textarea id="address"
+                              name="address"
+                              maxlength="255"
+                              placeholder="Enter the patient's address"><c:out value="${patient.address}"/></textarea>
+
+                </div>
+
+                <div class="form-group form-group-full">
+
+                    <label for="medicalNotes">
+                        Medical Notes
+                    </label>
+
+                    <textarea id="medicalNotes"
+                              name="medicalNotes"
+                              placeholder="Enter allergies, health conditions or other important notes"><c:out value="${patient.medicalNotes}"/></textarea>
+
+                    <small class="form-help">
+                        Record allergies and medical conditions
+                        that may affect dental treatment.
+                    </small>
+
+                </div>
+
+                <c:if test="${not empty patient.patientId}">
+
+                    <div class="form-group form-group-full">
+
+                        <label for="active">
+                            Patient Status
+                        </label>
+
+                        <select id="active"
+                                name="active">
+
+                            <option value="true"
+                                <c:if test="${patient.active}">
+                                    selected
+                                </c:if>>
+                                Active
+                            </option>
+
+                            <option value="false"
+                                <c:if test="${not patient.active}">
+                                    selected
+                                </c:if>>
+                                Inactive
+                            </option>
+
+                        </select>
+
+                    </div>
+
+                </c:if>
+
+            </div>
+
+            <div class="form-actions">
+
+                <a class="btn btn-secondary"
+                   href="${pageContext.request.contextPath}/patients">
+                    Cancel
+                </a>
+
+                <c:choose>
+                    <c:when test="${not empty patient.patientId}">
+
+                        <button type="submit"
+                                class="btn btn-primary">
+                            Update Patient
+                        </button>
+
+                    </c:when>
+
+                    <c:otherwise>
+
+                        <button type="submit"
+                                class="btn btn-primary">
+                            Register Patient
+                        </button>
+
+                    </c:otherwise>
+                </c:choose>
+
+            </div>
+
+        </form>
+
+    </section>
+
+</main>
+
+<footer class="main-footer">
+
+    <div class="container">
+
+        <p>
+            &copy; 2026 Sunrise Dental Clinic.
+            CIS6003 Advanced Programming Assignment.
+        </p>
+
+    </div>
+
+</footer>
 
 </body>
-
 </html>

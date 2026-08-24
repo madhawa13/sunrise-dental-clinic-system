@@ -2,8 +2,8 @@
          contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8" %>
 
-<%@ taglib prefix="c" uri="jakarta.tags.core" %>
-<%@ taglib prefix="fn" uri="jakarta.tags.functions" %>
+<%@ taglib prefix="c"
+           uri="jakarta.tags.core" %>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -14,20 +14,64 @@
     <meta name="viewport"
           content="width=device-width, initial-scale=1.0">
 
-    <title>Appointments - Sunrise Dental Clinic</title>
+    <title>
+        Appointment Management | Sunrise Dental Clinic
+    </title>
 
     <link rel="stylesheet"
           href="${pageContext.request.contextPath}/assets/css/style.css">
+
+    <link rel="stylesheet"
+          href="${pageContext.request.contextPath}/assets/css/modern.css?v=1">
 </head>
 
 <body>
 
 <header class="main-header">
+
     <div class="container">
 
-        <h1>Sunrise Dental Clinic</h1>
+        <div class="header-top">
 
-        <p>Appointment and Patient Management System</p>
+            <div>
+                <h1>Sunrise Dental Clinic</h1>
+
+                <p>
+                    Appointment and Patient Management System
+                </p>
+            </div>
+
+            <div class="user-panel">
+
+                <div class="user-information">
+
+                    <span class="user-welcome">
+                        Welcome,
+                        <strong>
+                            <c:out value="${sessionScope.username}"/>
+                        </strong>
+                    </span>
+
+                    <span class="user-role">
+                        <c:out value="${sessionScope.userRole}"/>
+                    </span>
+
+                </div>
+
+                <form method="post"
+                      action="${pageContext.request.contextPath}/logout"
+                      class="logout-form">
+
+                    <button type="submit"
+                            class="btn logout-button">
+                        Logout
+                    </button>
+
+                </form>
+
+            </div>
+
+        </div>
 
         <nav class="main-nav">
 
@@ -44,9 +88,34 @@
                 Appointments
             </a>
 
+            <c:if test="${sessionScope.userRole == 'DENTIST'}">
+
+                <a href="${pageContext.request.contextPath}/treatments">
+                    Treatments
+                </a>
+
+            </c:if>
+
+            <c:if test="${sessionScope.userRole == 'RECEPTIONIST'}">
+
+                <a href="${pageContext.request.contextPath}/bills">
+                    Billing
+                </a>
+
+                <a href="${pageContext.request.contextPath}/reports">
+                    Reports
+                </a>
+
+            </c:if>
+
+            <a href="${pageContext.request.contextPath}/help">
+                Help
+            </a>
+
         </nav>
 
     </div>
+
 </header>
 
 <main class="container">
@@ -57,21 +126,23 @@
             <h2>Appointment Management</h2>
 
             <p>
-                View, search, schedule and manage patient appointments.
+                View, search and manage patient
+                appointments and assigned dentists.
             </p>
         </div>
 
-        <a class="btn btn-primary"
-           href="${pageContext.request.contextPath}/appointments?action=new">
+        <c:if test="${sessionScope.userRole == 'RECEPTIONIST'}">
 
-            Schedule New Appointment
+            <a class="btn btn-primary"
+               href="${pageContext.request.contextPath}/appointments?action=new">
+                Schedule Appointment
+            </a>
 
-        </a>
+        </c:if>
 
     </section>
 
     <!-- Success messages -->
-
     <c:choose>
 
         <c:when test="${param.success == 'scheduled'}">
@@ -98,18 +169,9 @@
 
         </c:when>
 
-        <c:when test="${not empty successMessage}">
-
-            <div class="alert alert-success">
-                <c:out value="${successMessage}"/>
-            </div>
-
-        </c:when>
-
     </c:choose>
 
     <!-- Error message -->
-
     <c:if test="${not empty errorMessage}">
 
         <div class="alert alert-danger">
@@ -118,8 +180,7 @@
 
     </c:if>
 
-    <!-- Search section -->
-
+    <!-- Search -->
     <section class="card">
 
         <form method="get"
@@ -136,11 +197,11 @@
                     Search Appointments
                 </label>
 
-                <input type="text"
+                <input type="search"
                        id="searchTerm"
                        name="searchTerm"
-                       value="<c:out value='${param.searchTerm}'/>"
-                       placeholder="Enter appointment number or reason">
+                       value="<c:out value='${searchTerm}'/>"
+                       placeholder="Search appointment number, patient, dentist or status">
 
             </div>
 
@@ -162,8 +223,7 @@
 
     </section>
 
-    <!-- Appointment list -->
-
+    <!-- Appointment table -->
     <section class="card">
 
         <c:choose>
@@ -175,15 +235,18 @@
                     <h3>No appointments found</h3>
 
                     <p>
-                        There are currently no appointments to display.
+                        There are currently no appointments
+                        to display.
                     </p>
 
-                    <a class="btn btn-primary"
-                       href="${pageContext.request.contextPath}/appointments?action=new">
+                    <c:if test="${sessionScope.userRole == 'RECEPTIONIST'}">
 
-                        Schedule First Appointment
+                        <a class="btn btn-primary"
+                           href="${pageContext.request.contextPath}/appointments?action=new">
+                            Schedule First Appointment
+                        </a>
 
-                    </a>
+                    </c:if>
 
                 </div>
 
@@ -198,8 +261,8 @@
                         <thead>
                         <tr>
                             <th>Appointment No.</th>
-                            <th>Patient ID</th>
-                            <th>Dentist ID</th>
+                            <th>Patient</th>
+                            <th>Dentist</th>
                             <th>Date</th>
                             <th>Time</th>
                             <th>Reason</th>
@@ -216,17 +279,31 @@
                             <tr>
 
                                 <td>
-                                    <strong>
+                                    <span class="patient-number">
                                         <c:out value="${appointment.appointmentNumber}"/>
+                                    </span>
+                                </td>
+
+                                <td>
+                                    <strong class="patient-name">
+                                        <c:out value="${appointment.patientName}"/>
                                     </strong>
+
+                                    <small class="form-help">
+                                        Patient ID:
+                                        <c:out value="${appointment.patientId}"/>
+                                    </small>
                                 </td>
 
                                 <td>
-                                    <c:out value="${appointment.patientId}"/>
-                                </td>
+                                    <strong>
+                                        <c:out value="${appointment.dentistName}"/>
+                                    </strong>
 
-                                <td>
-                                    <c:out value="${appointment.dentistId}"/>
+                                    <small class="form-help">
+                                        Dentist ID:
+                                        <c:out value="${appointment.dentistId}"/>
+                                    </small>
                                 </td>
 
                                 <td>
@@ -242,50 +319,104 @@
                                 </td>
 
                                 <td>
-                                    <span class="status-badge status-${fn:toLowerCase(appointment.status)}">
 
-                                        <c:out value="${appointment.status}"/>
+                                    <c:choose>
 
-                                    </span>
+                                        <c:when test="${appointment.status == 'SCHEDULED'}">
+
+                                            <span class="status-badge status-scheduled">
+                                                Scheduled
+                                            </span>
+
+                                        </c:when>
+
+                                        <c:when test="${appointment.status == 'COMPLETED'}">
+
+                                            <span class="status-badge status-completed">
+                                                Completed
+                                            </span>
+
+                                        </c:when>
+
+                                        <c:when test="${appointment.status == 'CANCELLED'}">
+
+                                            <span class="status-badge status-cancelled">
+                                                Cancelled
+                                            </span>
+
+                                        </c:when>
+
+                                        <c:when test="${appointment.status == 'NO_SHOW'}">
+
+                                            <span class="status-badge status-no_show">
+                                                No Show
+                                            </span>
+
+                                        </c:when>
+
+                                        <c:otherwise>
+
+                                            <span class="status-badge">
+                                                <c:out value="${appointment.status}"/>
+                                            </span>
+
+                                        </c:otherwise>
+
+                                    </c:choose>
+
                                 </td>
 
                                 <td>
+
                                     <div class="action-buttons">
 
-                                        <a class="btn btn-small btn-secondary"
-                                           href="${pageContext.request.contextPath}/appointments?action=edit&id=${appointment.appointmentId}">
+                                        <c:choose>
 
-                                            Edit
+                                            <c:when test="${sessionScope.userRole == 'RECEPTIONIST'}">
 
-                                        </a>
+                                                <a class="btn btn-small btn-secondary"
+                                                   href="${pageContext.request.contextPath}/appointments?action=edit&id=${appointment.appointmentId}">
+                                                    Edit
+                                                </a>
 
-                                        <c:if test="${appointment.status == 'SCHEDULED'}">
+                                                <c:if test="${appointment.status == 'SCHEDULED'}">
 
-                                            <form method="post"
-                                                  action="${pageContext.request.contextPath}/appointments"
-                                                  class="inline-form">
+                                                    <form method="post"
+                                                          action="${pageContext.request.contextPath}/appointments"
+                                                          class="inline-form"
+                                                          onsubmit="return confirmAppointmentCancellation();">
 
-                                                <input type="hidden"
-                                                       name="action"
-                                                       value="cancel">
+                                                        <input type="hidden"
+                                                               name="action"
+                                                               value="cancel">
 
-                                                <input type="hidden"
-                                                       name="appointmentId"
-                                                       value="${appointment.appointmentId}">
+                                                        <input type="hidden"
+                                                               name="appointmentId"
+                                                               value="${appointment.appointmentId}">
 
-                                                <button type="submit"
-                                                        class="btn btn-small btn-danger"
-                                                        onclick="return confirm('Are you sure you want to cancel this appointment?');">
+                                                        <button type="submit"
+                                                                class="btn btn-small btn-danger">
+                                                            Cancel
+                                                        </button>
 
-                                                    Cancel
+                                                    </form>
 
-                                                </button>
+                                                </c:if>
 
-                                            </form>
+                                            </c:when>
 
-                                        </c:if>
+                                            <c:otherwise>
+
+                                                <span class="form-help">
+                                                    View only
+                                                </span>
+
+                                            </c:otherwise>
+
+                                        </c:choose>
 
                                     </div>
+
                                 </td>
 
                             </tr>
@@ -307,6 +438,7 @@
 </main>
 
 <footer class="main-footer">
+
     <div class="container">
 
         <p>
@@ -315,7 +447,16 @@
         </p>
 
     </div>
+
 </footer>
+
+<script>
+    function confirmAppointmentCancellation() {
+        return window.confirm(
+                "Are you sure you want to cancel this appointment?"
+        );
+    }
+</script>
 
 </body>
 </html>

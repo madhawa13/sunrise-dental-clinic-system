@@ -6,167 +6,298 @@
            uri="jakarta.tags.core" %>
 
 <!DOCTYPE html>
-
 <html lang="en">
 
 <head>
-
     <meta charset="UTF-8">
 
     <meta name="viewport"
           content="width=device-width, initial-scale=1.0">
 
-    <title>
-        Login - Sunrise Dental Clinic
-    </title>
+    <title>Login | Sunrise Dental Clinic</title>
 
     <link rel="stylesheet"
           href="${pageContext.request.contextPath}/assets/css/style.css">
-
+          
+    <link rel="stylesheet"
+      href="${pageContext.request.contextPath}/assets/css/modern.css?v=1">
 </head>
 
 <body class="login-page">
 
-<main class="login-container">
+<main class="login-layout">
 
-    <section class="login-card">
+    <section class="login-brand-panel">
 
-        <div class="login-brand">
+        <div class="login-brand-content">
 
-            <div class="login-icon">
-                &#129463;
+            <div class="login-logo">
+                <span class="login-logo-icon">
+                    &#129463;
+                </span>
+
+                <div>
+                    <h1>Sunrise Dental Clinic</h1>
+
+                    <p>
+                        Appointment and Patient
+                        Management System
+                    </p>
+                </div>
             </div>
 
-            <h1>Sunrise Dental Clinic</h1>
+            <div class="login-introduction">
 
-            <p>
-                Appointment and Patient
-                Management System
-            </p>
+                <span class="login-eyebrow">
+                    Secure Clinic Management
+                </span>
 
-        </div>
+                <h2>
+                    Better patient care starts with
+                    better information.
+                </h2>
 
-        <div class="login-heading">
+                <p>
+                    Manage patients, appointments,
+                    treatments, bills and payments using
+                    one secure and reliable system.
+                </p>
 
-            <h2>Staff Login</h2>
+                <div class="login-feature-list">
 
-            <p>
-                Enter your authorized staff
-                account information.
-            </p>
+                    <div class="login-feature">
+                        <span class="login-feature-icon">
+                            &#10003;
+                        </span>
 
-        </div>
+                        <span>
+                            Secure role-based staff access
+                        </span>
+                    </div>
 
-        <c:if test="${not empty errorMessage}">
+                    <div class="login-feature">
+                        <span class="login-feature-icon">
+                            &#10003;
+                        </span>
 
-            <div class="alert alert-error">
+                        <span>
+                            Accurate appointment management
+                        </span>
+                    </div>
 
-                <c:out value="${errorMessage}"/>
+                    <div class="login-feature">
+                        <span class="login-feature-icon">
+                            &#10003;
+                        </span>
 
-            </div>
+                        <span>
+                            Treatment, billing and reporting
+                        </span>
+                    </div>
 
-        </c:if>
-
-        <c:if test="${param.logout == 'success'}">
-
-            <div class="alert alert-success">
-
-                You have logged out successfully.
-
-            </div>
-
-        </c:if>
-
-        <c:if test="${param.session == 'expired'}">
-
-            <div class="alert alert-warning">
-
-                Your session has expired.
-                Please log in again.
-
-            </div>
-
-        </c:if>
-
-        <form method="post"
-              action="${pageContext.request.contextPath}/login"
-              class="login-form">
-
-            <div class="form-group">
-
-                <label for="username">
-
-                    Username
-                    <span class="required">*</span>
-
-                </label>
-
-                <input type="text"
-                       id="username"
-                       name="username"
-                       value="<c:out value='${submittedUsername}'/>"
-                       placeholder="Enter your username"
-                       maxlength="50"
-                       autocomplete="username"
-                       required
-                       autofocus>
+                </div>
 
             </div>
-
-            <div class="form-group">
-
-                <label for="password">
-
-                    Password
-                    <span class="required">*</span>
-
-                </label>
-
-                <input type="password"
-                       id="password"
-                       name="password"
-                       placeholder="Enter your password"
-                       autocomplete="current-password"
-                       required>
-
-            </div>
-
-            <button type="submit"
-                    class="btn btn-primary login-button">
-
-                Log In
-
-            </button>
-
-        </form>
-
-        <div class="login-information">
-
-            <p>
-                This system is restricted to
-                authorized clinic staff.
-            </p>
-
-            <p>
-                Receptionists and dentists must use
-                their assigned login accounts.
-            </p>
 
         </div>
 
     </section>
 
+    <section class="login-form-panel">
+
+        <div class="login-card">
+
+            <div class="login-card-header">
+
+                <div class="login-mobile-logo">
+                    &#129463;
+                </div>
+
+                <span class="login-card-label">
+                    Staff Portal
+                </span>
+
+                <h2>Welcome back</h2>
+
+                <p>
+                    Sign in using your authorized
+                    clinic staff account.
+                </p>
+
+            </div>
+
+            <c:if test="${not empty errorMessage}">
+
+                <div class="alert alert-error login-alert">
+                    <span class="alert-icon">
+                        !
+                    </span>
+
+                    <c:out value="${errorMessage}"/>
+                </div>
+
+            </c:if>
+
+            <c:if test="${param.logout == 'success'}">
+
+                <div class="alert alert-success login-alert">
+                    You have logged out successfully.
+                </div>
+
+            </c:if>
+
+            <c:if test="${param.session == 'expired'}">
+
+                <div class="alert alert-warning login-alert">
+                    Your session has expired.
+                    Please sign in again.
+                </div>
+
+            </c:if>
+
+            <form method="post"
+                  action="${pageContext.request.contextPath}/login"
+                  class="login-form">
+
+                <div class="form-group">
+
+                    <label for="username">
+                        Username
+                    </label>
+
+                    <div class="input-with-icon">
+
+                        <span class="input-icon">
+                            &#128100;
+                        </span>
+
+                        <input type="text"
+                               id="username"
+                               name="username"
+                               maxlength="50"
+                               value="<c:out value='${username}'/>"
+                               placeholder="Enter your username"
+                               autocomplete="username"
+                               autofocus
+                               required>
+
+                    </div>
+
+                </div>
+
+                <div class="form-group">
+
+                    <div class="password-label-row">
+
+                        <label for="password">
+                            Password
+                        </label>
+
+                        <span class="secure-label">
+                            Secure login
+                        </span>
+
+                    </div>
+
+                    <div class="input-with-icon">
+
+                        <span class="input-icon">
+                            &#128274;
+                        </span>
+
+                        <input type="password"
+                               id="password"
+                               name="password"
+                               placeholder="Enter your password"
+                               autocomplete="current-password"
+                               required>
+
+                        <button type="button"
+                                class="password-toggle"
+                                id="passwordToggle"
+                                aria-label="Show password">
+                            Show
+                        </button>
+
+                    </div>
+
+                </div>
+
+                <button type="submit"
+                        class="btn btn-primary login-submit">
+                    Sign In
+                    <span aria-hidden="true">
+                        &#8594;
+                    </span>
+                </button>
+
+            </form>
+
+            <div class="login-security-note">
+
+                <span class="login-security-icon">
+                    &#128737;
+                </span>
+
+                <p>
+                    This system is restricted to authorized
+                    Sunrise Dental Clinic staff members.
+                </p>
+
+            </div>
+
+            <div class="login-help">
+
+                Need assistance?
+
+                <a href="${pageContext.request.contextPath}/help">
+                    Open the help guide
+                </a>
+
+            </div>
+
+        </div>
+
+        <p class="login-copyright">
+            &copy; 2026 Sunrise Dental Clinic.
+            CIS6003 Advanced Programming Assignment.
+        </p>
+
+    </section>
+
 </main>
 
-<footer class="login-footer">
+<script>
+    const passwordInput =
+            document.getElementById("password");
 
-    <p>
-        &copy; 2026 Sunrise Dental Clinic.
-        CIS6003 Advanced Programming Assignment.
-    </p>
+    const passwordToggle =
+            document.getElementById("passwordToggle");
 
-</footer>
+    passwordToggle.addEventListener(
+            "click",
+            function () {
+
+                const passwordIsHidden =
+                        passwordInput.type === "password";
+
+                passwordInput.type =
+                        passwordIsHidden
+                                ? "text"
+                                : "password";
+
+                passwordToggle.textContent =
+                        passwordIsHidden
+                                ? "Hide"
+                                : "Show";
+
+                passwordToggle.setAttribute(
+                        "aria-label",
+                        passwordIsHidden
+                                ? "Hide password"
+                                : "Show password");
+            });
+</script>
 
 </body>
-
 </html>
